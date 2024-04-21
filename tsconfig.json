@@ -1,0 +1,21 @@
+{
+    "baseUrl": ".",
+    "compilerOptions": {
+        "types": [],
+        "module": "AMD",
+        "lib": ["ES2016"],
+        "strictNullChecks": true,
+        "removeComments": true,
+        "outDir": "./output"
+    },
+    "paths": {
+      "@utils/*": ["./builtin/*"]
+    },
+    "include": [
+        "./*.d.ts",
+        "./**/*.ts",
+    ],
+    "exclude": [
+        "./compiler/*"
+    ]
+}
