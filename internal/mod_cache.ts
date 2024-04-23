@@ -1,4 +1,4 @@
-export class ModDataCache {
+class ModDataCache {
     private currentModId: string | null;
     private cache: { [modId: string]: any };
 
@@ -114,3 +114,5 @@ export class ModDataCache {
         return null;
     }
 };
+
+export const Cache = new ModDataCache();

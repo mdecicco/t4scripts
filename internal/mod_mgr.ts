@@ -1,11 +1,29 @@
-type TrackedMod = {
+import { Cache } from './mod_cache';
+
+type ModTrackingData = {
     __mod_id: string;
     __last_modified_on: number;
-} & Mod;
+    __update_interval: number;
+    __update_timer: number;
+};
 
-export class ModManager {
+type TrackedGlobalMod = ModTrackingData & GlobalMod;
+type TrackedActorMod = ModTrackingData & ActorMod;
+
+type ActorControllerTrackingData = {
+    __actor: t4.CActor;
+    __mod_id: string;
+    __update_interval: number;
+    __update_timer: number;
+};
+type TrackedActorController = ActorControllerTrackingData & ActorController;
+
+class ModManager {
     private didInitialize: boolean;
-    private mods: TrackedMod[];
+    private allModIds: string[];
+    private globalMods: TrackedGlobalMod[];
+    private actorMods: TrackedActorMod[];
+    private actorControllers: TrackedActorController[];
     private lastTime: f32;
     private deltaTime: f32;
     private fps: f32;
@@ -26,7 +44,12 @@ export class ModManager {
         // todo: listen for requests from the host to load / unload mods
 
         this.didInitialize = false;
-        this.mods = [];
+
+        this.allModIds = [];
+        this.globalMods = [];
+        this.actorMods = [];
+        this.actorControllers = [];
+
         this.lastTime = t4.elapsedTime;
         this.deltaTime = 1.0 / 60.0;
         this.fps = 0;
@@ -77,6 +100,17 @@ export class ModManager {
         (Cache as any).currentModId = null;
     }
 
+    private callActorControllerMethod<M extends (...args: any) => any>(c: TrackedActorController, methodName: string, method: M | undefined, ...args: Parameters<M>) {
+        (Cache as any).currentModId = c.__mod_id;
+        try {
+            if (method) method.apply(c, args);
+        } catch (err) {
+            console.error(`Caught exception while calling '${methodName}' for actor controller from mod '${c.__mod_id}'`);
+            console.error(err);
+        }
+        (Cache as any).currentModId = null;
+    }
+
     private onLoad() {
         const engine = t4.getEngine();
         
@@ -85,7 +119,8 @@ export class ModManager {
                 this.bindEngineListeners(engine);
                 t4.removeEngineCreateListener(engineListener);
 
-                this.mods.forEach(m => this.callModMethod(m, 'onInitialize', m.onInitialize));
+                this.globalMods.forEach(m => this.callModMethod(m, 'onInitialize', m.onInitialize));
+                this.actorMods.forEach(m => this.callModMethod(m, 'onInitialize', m.onInitialize));
 
                 this.didInitialize = true;
             });
@@ -97,13 +132,20 @@ export class ModManager {
         this.startModuleListener();
         this.scanModules();
 
-        this.mods.forEach(m => this.callModMethod(m, 'onInitialize', m.onInitialize));
+        this.globalMods.forEach(m => this.callModMethod(m, 'onInitialize', m.onInitialize));
 
         this.didInitialize = true;
     }
 
     private onUnload() {
-        this.mods.forEach(m => this.callModMethod(m, 'onShutdown', m.onShutdown));
+        this.globalMods.forEach(m => this.callModMethod(m, 'onShutdown', m.onShutdown));
+        this.actorControllers.forEach(c => this.callActorControllerMethod(c, 'onShutdown', c.onShutdown));
+        this.actorMods.forEach(m => this.callModMethod(m, 'onShutdown', m.onShutdown));
+
+        this.globalMods = [];
+        this.actorControllers = [];
+        this.actorMods = [];
+        
         this.removeListeners();
         this.didInitialize = false;
     }
@@ -124,17 +166,41 @@ export class ModManager {
             
             this.nextModLastModificationTime = mod.status.lastWriteTime;
 
-            const loaded = this.mods.find(m => m.__mod_id === this.nextModId);
-            if (loaded) {
+            const loadedGlobalMod = this.globalMods.find(m => m.__mod_id === this.nextModId);
+            if (loadedGlobalMod) {
                 // Mod was already loaded, unload it so we can load it again
-                if (loaded.__last_modified_on === mod.status.lastWriteTime) {
+                if (loadedGlobalMod.__last_modified_on === mod.status.lastWriteTime) {
                     this.nextModId = null;
                     this.nextModLastModificationTime = null;
                     return;
                 }
 
-                this.callModMethod(loaded, 'onShutdown', loaded.onShutdown);
-                this.mods = this.mods.filter(m => m.__mod_id !== loaded.__mod_id);
+                this.callModMethod(loadedGlobalMod, 'onShutdown', loadedGlobalMod.onShutdown);
+                this.globalMods = this.globalMods.filter(m => m.__mod_id !== loadedGlobalMod.__mod_id);
+                this.allModIds = this.allModIds.filter(mid => mid !== loadedGlobalMod.__mod_id);
+            }
+
+            const loadedActorMod = this.actorMods.find(m => m.__mod_id === this.nextModId);
+            if (loadedActorMod) {
+                // Mod was already loaded, unload it so we can load it again
+                if (loadedActorMod.__last_modified_on === mod.status.lastWriteTime) {
+                    this.nextModId = null;
+                    this.nextModLastModificationTime = null;
+                    return;
+                }
+
+                this.actorControllers = this.actorControllers.filter(c => {
+                    if (c.__mod_id === this.nextModId) {
+                        this.callActorControllerMethod(c, 'onShutdown', c.onShutdown);
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                this.callModMethod(loadedActorMod, 'onShutdown', loadedActorMod.onShutdown);
+                this.actorMods = this.actorMods.filter(m => m.__mod_id !== loadedActorMod.__mod_id);
+                this.allModIds = this.allModIds.filter(mid => mid !== loadedActorMod.__mod_id);
             }
             
             // Load it
@@ -201,23 +267,44 @@ export class ModManager {
     }
 
     private onActorCreated(actor: t4.CActor) {
-        this.mods.forEach(m => this.callModMethod(m, 'onActorCreated', m.onActorCreated, actor));
+        this.globalMods.forEach(m => this.callModMethod(m, 'onActorCreated', m.onActorCreated, actor));
+        this.actorMods.forEach(m => {
+            if (m.actorSelector(actor)) {
+                const controller = m.createController(actor) as TrackedActorController;
+                controller.__actor = actor;
+                controller.__mod_id = m.__mod_id;
+                controller.__update_interval = m.__update_interval;
+                controller.__update_timer = 0;
+                this.actorControllers.push(controller);
+            }
+        });
     }
 
     private onActorDestroy(actor: t4.CActor) {
-        this.mods.forEach(m => this.callModMethod(m, 'onActorDestroy', m.onActorDestroy, actor));
+        this.globalMods.forEach(m => this.callModMethod(m, 'onActorDestroy', m.onActorDestroy, actor));
+        this.actorControllers = this.actorControllers.filter(c => {
+            if (t4.compareGameObjects(c.__actor, actor)) {
+                this.callActorControllerMethod(c, 'onDestroy', c.onDestroy);
+                return false;
+            }
+
+            return true;
+        });
     }
 
     private onLevelCreate(level: t4.CLevel) {
-        this.mods.forEach(m => this.callModMethod(m, 'onLevelCreate', m.onLevelCreate, level));
+        this.globalMods.forEach(m => this.callModMethod(m, 'onLevelCreate', m.onLevelCreate, level));
     }
 
     private onLevelDestroy(level: t4.CLevel) {
-        this.mods.forEach(m => this.callModMethod(m, 'onLevelDestroy', m.onLevelDestroy, level));
+        this.globalMods.forEach(m => this.callModMethod(m, 'onLevelDestroy', m.onLevelDestroy, level));
     }
 
     private onKeyboardInput(event: t4.KeyboardEvent) {
-        this.mods.forEach(m => this.callModMethod(m, 'onKeyboardInput', m.onKeyboardInput, event));
+        this.globalMods.forEach(m => this.callModMethod(m, 'onKeyboardInput', m.onKeyboardInput, event));
+        this.actorControllers.forEach(c => {
+            if (c.onKeyboardInput) this.callActorControllerMethod(c, 'onKeyboardInput', c.onKeyboardInput, event);
+        });
     }
 
     private onUpdate() {
@@ -263,11 +350,38 @@ export class ModManager {
         this.lastTime = elapsed;
         this.fps = 1.0 / this.deltaTime;
 
-        this.mods.forEach(m => this.callModMethod(m, 'onUpdate', m.onUpdate, this.deltaTime));
+        this.globalMods.forEach(m => {
+            if (m.__update_interval === 0) {
+                this.callModMethod(m, 'onUpdate', m.onUpdate, this.deltaTime);
+                return;
+            }
+
+            m.__update_timer += this.deltaTime;
+            while (m.__update_timer >= m.__update_interval) {
+                this.callModMethod(m, 'onUpdate', m.onUpdate, m.__update_interval);
+                m.__update_timer -= m.__update_interval;
+            }
+        });
+
+        this.actorControllers.forEach(c => {
+            if (c.__update_interval === 0) {
+                this.callModMethod(c, 'onUpdate', c.onUpdate, this.deltaTime);
+                return;
+            }
+
+            c.__update_timer += this.deltaTime;
+            while (c.__update_timer >= c.__update_interval) {
+                if (c.onUpdate) this.callActorControllerMethod(c, 'onUpdate', c.onUpdate, c.__update_interval);
+                c.__update_timer -= c.__update_interval;
+            }
+        });
     }
 
     private onRender() {
-        this.mods.forEach(m => this.callModMethod(m, 'onRender', m.onRender, this.deltaTime));
+        this.globalMods.forEach(m => this.callModMethod(m, 'onRender', m.onRender, this.deltaTime));
+        this.actorControllers.forEach(c => {
+            if (c.onRender) this.callActorControllerMethod(c, 'onRender', c.onRender, this.deltaTime);
+        });
     }
 
     registerGlobalMod(modClass: GlobalModConstructor) {
@@ -275,15 +389,17 @@ export class ModManager {
             throw `ModMan.registerGlobalMod called at an unusual time, not expecting it...`;
         }
 
-        const existing = this.mods.find(m => m.__mod_id == this.nextModId);
+        const existing = this.allModIds.find(mid => mid == this.nextModId);
         if (existing) throw `Multiple mods with the id '${this.nextModId}' encountered. Mod IDs must be unique.`;
 
         (Cache as any).currentModId = this.nextModId;
         const mod = new modClass();
         (Cache as any).currentModId = null;
 
-        (mod as TrackedMod).__mod_id = this.nextModId;
-        (mod as TrackedMod).__last_modified_on = this.nextModLastModificationTime;
+        (mod as TrackedGlobalMod).__mod_id = this.nextModId;
+        (mod as TrackedGlobalMod).__last_modified_on = this.nextModLastModificationTime;
+        (mod as TrackedGlobalMod).__update_interval = modClass.updateInterval || 0;
+        (mod as TrackedGlobalMod).__update_timer = 0;
         if (this.didInitialize) {
             // Can't count on the onLoad function of this class
             // being called any time soon, just load the mod now
@@ -291,6 +407,55 @@ export class ModManager {
             if (mod.onInitialize) mod.onInitialize();
         }
 
-        this.mods.push(mod as TrackedMod);
+        this.globalMods.push(mod as TrackedGlobalMod);
+        this.allModIds.push(this.nextModId);
+    }
+
+    registerActorMod(modClass: ActorModConstructor) {
+        if (this.nextModId === null || this.nextModLastModificationTime === null) {
+            throw `ModMan.registerActorMod called at an unusual time, not expecting it...`;
+        }
+
+        const existing = this.allModIds.find(mid => mid == this.nextModId);
+        if (existing) throw `Multiple mods with the id '${this.nextModId}' encountered. Mod IDs must be unique.`;
+
+        (Cache as any).currentModId = this.nextModId;
+        const mod = new modClass();
+        (Cache as any).currentModId = null;
+
+        (mod as TrackedActorMod).__mod_id = this.nextModId;
+        (mod as TrackedActorMod).__last_modified_on = this.nextModLastModificationTime;
+        (mod as TrackedActorMod).__update_interval = modClass.updateInterval || 0;
+        (mod as TrackedActorMod).__update_timer = 0;
+
+        if (this.didInitialize) {
+            // Can't count on the onLoad function of this class
+            // being called any time soon, just load the mod now
+            // since we know the game has already been running
+            if (mod.onInitialize) mod.onInitialize();
+        }
+
+        this.actorMods.push(mod as TrackedActorMod);
+        this.allModIds.push(this.nextModId);
+
+        // There may be actors already, make sure to get controllers for them if necessary
+        const actors = t4.getLiveActors();
+        if (actors.length > 0) {
+            actors.forEach(actor => {
+                t4.refreshGameObject(actor);
+                this.actorMods.forEach(m => {
+                    if (m.actorSelector(actor)) {
+                        const controller = m.createController(actor) as TrackedActorController;
+                        controller.__actor = actor;
+                        controller.__mod_id = m.__mod_id;
+                        controller.__update_interval = (mod as TrackedActorMod).__update_interval;
+                        controller.__update_timer = 0;
+                        this.actorControllers.push(controller);
+                    }
+                });
+            });
+        }
     }
 };
+
+export const ModMan = new ModManager();

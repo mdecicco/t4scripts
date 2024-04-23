@@ -22,6 +22,9 @@ declare const global : any;
 interface Mod {
     onInitialize?(): void;
     onShutdown?(): void;
+}
+
+interface GlobalMod extends Mod {
     onActorCreated?(actor: t4.CActor): void;
     onActorDestroy?(actor: t4.CActor): void;
     onLevelCreate?(level: t4.CLevel): void;
@@ -29,6 +32,19 @@ interface Mod {
     onKeyboardInput?(event: t4.KeyboardEvent): void;
     onUpdate?(deltaTime: f32): void;
     onRender?(deltaTime: f32): void;
+}
+
+interface ActorController {
+    onShutdown?();
+    onDestroy?();
+    onKeyboardInput?(event: t4.KeyboardEvent): void;
+    onUpdate?(deltaTime: f32): void;
+    onRender?(deltaTime: f32): void;
+}
+
+interface ActorMod extends Mod {
+    actorSelector(actor: t4.CActor) : boolean; 
+    createController(actor: t4.CActor) : ActorController;
 }
 
 declare class ModDataCache {
@@ -44,15 +60,40 @@ declare class ModDataCache {
 }
 
 interface GlobalModConstructor {
-    new (): Mod;
+    /**
+     * The amount of time to wait in seconds in between updates
+     * Use 0 to update every frame. Important note: If you set this
+     * to a value that's smaller than the frame rate of the game then
+     * your update method may be called multiple times per frame. This
+     * is desirable for any behavior that absolutely requires a fixed
+     * time step, but be careful. If you set it to something low like
+     * 0.00000001 then the game will essentially come to a halt while
+     * it calls your update method like a million times per frame...
+     */
+    updateInterval?: number;
+
+    new (): GlobalMod;
+}
+
+interface ActorModConstructor {
+    /**
+     * The amount of time to wait in seconds in between updates for each actor.
+     * Use 0 to update every frame. Important note: If you set this
+     * to a value that's smaller than the frame rate of the game then
+     * your update method may be called multiple times per frame. This
+     * is desirable for any behavior that absolutely requires a fixed
+     * time step, but be careful. If you set it to something low like
+     * 0.00000001 then the game will essentially come to a halt while
+     * it calls your update method like a million times per frame...
+     */
+    updateInterval?: number;
+    new (): ActorMod;
 }
 
 declare class ModManager {
     registerGlobalMod(mod: GlobalModConstructor): void;
+    registerActorMod(mod: ActorModConstructor): void;
 }
-
-declare const Cache: ModDataCache;
-declare const ModMan: ModManager;
 
 declare class vec2f {
     public x: f32;
@@ -169,6 +210,92 @@ declare namespace t4 {
     function getGameObjectId(objA: t4.CLevel): u32;
     function getGameObjectId(objA: t4.CGame): u32;
     function getGameObjectId(objA: t4.CActorTypeInfo): u32;
-    function getGameObjectId(objA: t4.CBasicPhysics): u32;
+    function getGameObjectId(objA: t4.CPhysicsInfo): u32;
     function getGameObjectId<T extends {}>(objA: T | null): u32 | null;
+
+    /**
+     * When game objects are converted to script objects, we lose the ability to efficiently
+     * look up the actual current values of the fields in realtime. For some fields where it's
+     * important to only get current values that behavior is enabled, but otherwise you will
+     * have to manually "refresh" the game objects to get the current values. This should be
+     * avoided until it's strictly necessary.
+     */
+    function refreshGameObject(obj: any);
+
+    enum ActorType {
+        Actor = 'Actor',
+        Camera = 'Camera',
+        SpawnPoint = 'SpawnPoint',
+        MPPickup = 'MPPickup',
+        DMPlayer = 'DMPlayer',
+        CompyPlayer = 'CompyPlayer',
+        BagActor = 'BagActor',
+        Player = 'Player',
+        DeadPlayer = 'DeadPlayer',
+        Steracosaur = 'Steracosaur',
+        AlarmBox = 'AlarmBox',
+        AnimalAI = 'AnimalAI',
+        AquaticAI = 'AquaticAI',
+        AquaticIndigenousAI = 'AquaticIndigenousAI',
+        BulletAI = 'BulletAI',
+        DeviceAI = 'DeviceAI',
+        EnemyAI = 'EnemyAI',
+        FlyingIndigenousAI = 'FlyingIndigenousAI',
+        GroupAnimalAI = 'GroupAnimalAI',
+        HumanAI = 'HumanAI',
+        IndigenousAI = 'IndigenousAI',
+        MountAI = 'MountAI',
+        PlesiosaurAI = 'PlesiosaurAI',
+        RaiderAI = 'RaiderAI',
+        RidingRaptorAI = 'RidingRaptorAI',
+        SwayingTreeAI = 'SwayingTreeAI',
+        TestEnemyAI = 'TestEnemyAI',
+        TRexAI = 'TRexAI',
+        BowObject = 'BowObject',
+        CoverObject = 'CoverObject',
+        DarkMatterObject = 'DarkMatterObject',
+        GeneratorObject = 'GeneratorObject',
+        GuidedDeviceObject = 'GuidedDeviceObject',
+        LevelExitObject = 'LevelExitObject',
+        MPGeneratorObject = 'MPGeneratorObject',
+        NapalmGelObject = 'NapalmGelObject',
+        SpikedMineObject = 'SpikedMineObject',
+        TurretObject = 'TurretObject',
+        WarClubObject = 'WarClubObject',
+        AITarget = 'AITarget',
+        RCDevice = 'RCDevice',
+        EnemyWeapon = 'EnemyWeapon',
+        EnemyAccessory = 'EnemyAccessory',
+        AIMarker = 'AIMarker',
+        FallDeathRegion = 'FallDeathRegion',
+        WeaponWheel = 'WeaponWheel',
+        Flag = 'Flag',
+        Door = 'Door',
+        Shotgun = 'Shotgun',
+        SuperShotgun = 'SuperShotgun',
+        DarkMatterCube = 'DarkMatterCube',
+        RocketLauncher = 'RocketLauncher',
+        Minigun = 'MiniGun',
+        TekBow = 'TekBow',
+        CrossBow = 'CrossBow',
+        Flamethrower = 'FlameThrower',
+        DinoBite = 'DinoBite',
+        GuidedDevice = 'GuidedDevice',
+        SpikedMine = 'SpikedMine',
+        SniperPistol = 'SniperPistol',
+        StackManager = 'StackManager',
+        Stackable = 'Stackable',
+        TurokPickup = 'TurokPickup',
+        Rocket3Actor = 'Rocket3Actor',
+        SmartBullet = 'SmartBullet',
+        RocketPteranadon = 'RocketPteranadon',
+        Skybox = 'Sky',
+        Lock2D = 'Lock2D',
+        tekWeapon = 'TekWeapon',
+        GravityDisruptor = 'GravityDisruptor',
+        SwarmBore = 'SwarmBore',
+        GameModeInfo = 'GameModeInfo',
+        CinemaCameraAttractor = 'CinemaCameraAttractor',
+        EmpathyBlast = 'EmpathyBlast'
+    }
 }

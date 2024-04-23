@@ -1,10 +1,5 @@
-import { runEventLoop } from './event_loop';
-import { ModManager } from './mod_mgr';
-import { ModDataCache } from './mod_cache';
+import './mod_mgr';
 import * as m from '../utils/math';
-
-global.Cache = new ModDataCache();
-global.ModMan = new ModManager();
 
 global.vec2f = m.vec2f;
 global.vec3f = m.vec3f;
@@ -33,4 +28,88 @@ t4.getGameObjectId = function <T extends {}>(a: T | null) {
     return (a as any).__obj_id;
 };
 
-runEventLoop();
+t4.refreshGameObject = function(a: any) {
+    if (!a) return;
+    const hasPtr = a.hasOwnProperty('__refresh');
+    if (!hasPtr) return;
+    
+    if ((typeof a.__refresh) !== 'function') return;
+    a.__refresh();
+};
+
+(t4.ActorType as any) = {
+    Actor: 'Actor',
+    Camera: 'Camera',
+    SpawnPoint: 'SpawnPoint',
+    MPPickup: 'MPPickup',
+    DMPlayer: 'DMPlayer',
+    CompyPlayer: 'CompyPlayer',
+    BagActor: 'BagActor',
+    Player: 'Player',
+    DeadPlayer: 'DeadPlayer',
+    Steracosaur: 'Steracosaur',
+    AlarmBox: 'AlarmBox',
+    AnimalAI: 'AnimalAI',
+    AquaticAI: 'AquaticAI',
+    AquaticIndigenousAI: 'AquaticIndigenousAI',
+    BulletAI: 'BulletAI',
+    DeviceAI: 'DeviceAI',
+    EnemyAI: 'EnemyAI',
+    FlyingIndigenousAI: 'FlyingIndigenousAI',
+    GroupAnimalAI: 'GroupAnimalAI',
+    HumanAI: 'HumanAI',
+    IndigenousAI: 'IndigenousAI',
+    MountAI: 'MountAI',
+    PlesiosaurAI: 'PlesiosaurAI',
+    RaiderAI: 'RaiderAI',
+    RidingRaptorAI: 'RidingRaptorAI',
+    SwayingTreeAI: 'SwayingTreeAI',
+    TestEnemyAI: 'TestEnemyAI',
+    TRexAI: 'TRexAI',
+    BowObject: 'BowObject',
+    CoverObject: 'CoverObject',
+    DarkMatterObject: 'DarkMatterObject',
+    GeneratorObject: 'GeneratorObject',
+    GuidedDeviceObject: 'GuidedDeviceObject',
+    LevelExitObject: 'LevelExitObject',
+    MPGeneratorObject: 'MPGeneratorObject',
+    NapalmGelObject: 'NapalmGelObject',
+    SpikedMineObject: 'SpikedMineObject',
+    TurretObject: 'TurretObject',
+    WarClubObject: 'WarClubObject',
+    AITarget: 'AITarget',
+    RCDevice: 'RCDevice',
+    EnemyWeapon: 'EnemyWeapon',
+    EnemyAccessory: 'EnemyAccessory',
+    AIMarker: 'AIMarker',
+    FallDeathRegion: 'FallDeathRegion',
+    WeaponWheel: 'WeaponWheel',
+    Flag: 'Flag',
+    Door: 'Door',
+    Shotgun: 'Shotgun',
+    SuperShotgun: 'SuperShotgun',
+    DarkMatterCube: 'DarkMatterCube',
+    RocketLauncher: 'RocketLauncher',
+    Minigun: 'MiniGun',
+    TekBow: 'TekBow',
+    CrossBow: 'CrossBow',
+    Flamethrower: 'FlameThrower',
+    DinoBite: 'DinoBite',
+    GuidedDevice: 'GuidedDevice',
+    SpikedMine: 'SpikedMine',
+    SniperPistol: 'SniperPistol',
+    StackManager: 'StackManager',
+    Stackable: 'Stackable',
+    TurokPickup: 'TurokPickup',
+    Rocket3Actor: 'Rocket3Actor',
+    SmartBullet: 'SmartBullet',
+    RocketPteranadon: 'RocketPteranadon',
+    Skybox: 'Sky',
+    Lock2D: 'Lock2D',
+    tekWeapon: 'TekWeapon',
+    GravityDisruptor: 'GravityDisruptor',
+    SwarmBore: 'SwarmBore',
+    GameModeInfo: 'GameModeInfo',
+    CinemaCameraAttractor: 'CinemaCameraAttractor',
+    EmpathyBlast: 'EmpathyBlast'
+};
