@@ -12,7 +12,7 @@ import { ModMan } from '../internal/mod_mgr';
 //
 // I have much to learn about the internals of this game
 
-class MoonJumpController {
+class RiseUpController {
     private actor : t4.CActor;
     private goUp : boolean;
 
@@ -47,7 +47,7 @@ class MoonJumpController {
     }
 };
 
-class MoonJumpMod implements ActorMod {
+class RiseUpMod implements ActorMod {
     constructor() {}
 
     actorSelector(actor: t4.CActor) {
@@ -68,8 +68,8 @@ class MoonJumpMod implements ActorMod {
     }
 
     createController(actor: t4.CActor) {
-        return new MoonJumpController(actor);
+        return new RiseUpController(actor);
     }
 };
 
-ModMan.registerActorMod(MoonJumpMod);
+ModMan.registerActorMod(RiseUp);
