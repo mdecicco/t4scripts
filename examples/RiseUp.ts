@@ -12,7 +12,7 @@ import { ModMan } from '../internal/mod_mgr';
 //
 // I have much to learn about the internals of this game
 
-class RiseUpController {
+class RiseUpController implements ActorController {
     private actor : t4.CActor;
     private goUp : boolean;
 
@@ -72,4 +72,4 @@ class RiseUpMod implements ActorMod {
     }
 };
 
-ModMan.registerActorMod(RiseUp);
+ModMan.registerActorMod(RiseUpMod);
