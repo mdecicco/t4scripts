@@ -34,6 +34,7 @@ class ModManager {
     private actorCreateListener: u32 | null;
     private actorDestroyListener: u32 | null;
     private levelCreateListener: u32 | null;
+    private levelSpawnListener: u32 | null;
     private levelDestroyListener: u32 | null;
     private renderListener: u32 | null;
     private updateListener: u32 | null;
@@ -67,22 +68,7 @@ class ModManager {
         this.moduleInterval = null;
 
         this.keyboardListener = t4.addKeyboardListener(this.onKeyboardInput.bind(this));
-
-        let createListener = t4.addEngineCreateListener(() => {
-            this.onLoad();
-            t4.removeEngineCreateListener(createListener);
-        });
-
-        // todo:
-        // - Add filesystem API
-        // - Listen for changes in the `<game>/scripts/output/mods` directory
-        //     - Instead of requiring mods to provide their own IDs, just 
-        //       use the file path of the mod as the ID or something
-        //     - When a compiled mod script is created:
-        //         - Communicate to the host to try to load it
-        //     - When a compiled mod script is updated:
-        //         - Unload the currently running instance of that mod
-        //         - Communicate to the host to load the fresh version
+        this.onLoad();
     }
 
     private getModId(mod: Mod) {
@@ -116,13 +102,8 @@ class ModManager {
         
         if (!engine) {
             let engineListener = t4.addEngineCreateListener(engine => {
-                this.bindEngineListeners(engine);
+                this.onLoad();
                 t4.removeEngineCreateListener(engineListener);
-
-                this.globalMods.forEach(m => this.callModMethod(m, 'onInitialize', m.onInitialize));
-                this.actorMods.forEach(m => this.callModMethod(m, 'onInitialize', m.onInitialize));
-
-                this.didInitialize = true;
             });
             return;
         }
@@ -133,6 +114,7 @@ class ModManager {
         this.scanModules();
 
         this.globalMods.forEach(m => this.callModMethod(m, 'onInitialize', m.onInitialize));
+        this.actorMods.forEach(m => this.callModMethod(m, 'onInitialize', m.onInitialize));
 
         this.didInitialize = true;
     }
@@ -216,11 +198,13 @@ class ModManager {
     }
 
     private startModuleListener() {
+        console.log('Starting mod modification listener');
         if (this.moduleInterval) return;
         this.moduleInterval = setInterval(this.scanModules.bind(this), 2000);
     }
 
     private stopModuleListener() {
+        console.log('Stopping mod modification listener');
         if (!this.moduleInterval) return;
         clearInterval(this.moduleInterval);
         this.moduleInterval = null;
@@ -230,6 +214,7 @@ class ModManager {
         this.actorCreateListener = engine.addActorCreateListener(this.onActorCreated.bind(this));
         this.actorDestroyListener = engine.addActorDestroyListener(this.onActorDestroy.bind(this));
         this.levelCreateListener = engine.addLevelCreateListener(this.onLevelCreate.bind(this));
+        this.levelSpawnListener = engine.addLevelSpawnListener(this.onLevelSpawn.bind(this));
         this.levelDestroyListener = engine.addLevelDestroyListener(this.onLevelDestroy.bind(this));
         this.renderListener = engine.addRenderListener(this.onRender.bind(this));
         this.updateListener = engine.addUpdateListener(this.onUpdate.bind(this));
@@ -244,6 +229,9 @@ class ModManager {
 
         if (this.levelCreateListener) engine.removeLevelCreateListener(this.levelCreateListener);
         this.levelCreateListener = null;
+
+        if (this.levelSpawnListener) engine.removeLevelSpawnListener(this.levelSpawnListener);
+        this.levelSpawnListener = null;
 
         if (this.levelDestroyListener) engine.removeLevelDestroyListener(this.levelDestroyListener);
         this.levelDestroyListener = null;
@@ -268,6 +256,9 @@ class ModManager {
 
     private onActorCreated(actor: t4.CActor) {
         this.globalMods.forEach(m => this.callModMethod(m, 'onActorCreated', m.onActorCreated, actor));
+        this.actorControllers.forEach(c => {
+            this.callActorControllerMethod(c, 'onActorCreated', c.onActorCreated, actor);
+        });
         this.actorMods.forEach(m => {
             if (m.actorSelector(actor)) {
                 const controller = m.createController(actor) as TrackedActorController;
@@ -286,6 +277,8 @@ class ModManager {
             if (t4.compareGameObjects(c.__actor, actor)) {
                 this.callActorControllerMethod(c, 'onDestroy', c.onDestroy);
                 return false;
+            } else {
+                this.callActorControllerMethod(c, 'onActorDestroy', c.onActorDestroy, actor);
             }
 
             return true;
@@ -294,10 +287,23 @@ class ModManager {
 
     private onLevelCreate(level: t4.CLevel) {
         this.globalMods.forEach(m => this.callModMethod(m, 'onLevelCreate', m.onLevelCreate, level));
+        this.actorControllers.forEach(c => {
+            this.callActorControllerMethod(c, 'onLevelCreate', c.onLevelCreate, level);
+        });
+    }
+
+    private onLevelSpawn(level: t4.CLevel) {
+        this.globalMods.forEach(m => this.callModMethod(m, 'onLevelSpawn', m.onLevelSpawn, level));
+        this.actorControllers.forEach(c => {
+            this.callActorControllerMethod(c, 'onLevelSpawn', c.onLevelSpawn, level);
+        });
     }
 
     private onLevelDestroy(level: t4.CLevel) {
         this.globalMods.forEach(m => this.callModMethod(m, 'onLevelDestroy', m.onLevelDestroy, level));
+        this.actorControllers.forEach(c => {
+            this.callActorControllerMethod(c, 'onLevelDestroy', c.onLevelDestroy, level);
+        });
     }
 
     private onKeyboardInput(event: t4.KeyboardEvent) {

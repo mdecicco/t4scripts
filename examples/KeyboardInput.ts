@@ -12,7 +12,7 @@ import { ModMan } from '../internal/mod_mgr';
 //
 // I have much to learn about the internals of this game
 
-class RiseUpController implements ActorController {
+class KeyboardInputTestController implements ActorController {
     private actor : t4.CActor;
     private goUp : boolean;
 
@@ -47,7 +47,7 @@ class RiseUpController implements ActorController {
     }
 };
 
-class RiseUpMod implements ActorMod {
+class KeyboardInputTestMod implements ActorMod {
     constructor() {}
 
     actorSelector(actor: t4.CActor) {
@@ -68,8 +68,8 @@ class RiseUpMod implements ActorMod {
     }
 
     createController(actor: t4.CActor) {
-        return new RiseUpController(actor);
+        return new KeyboardInputTestController(actor);
     }
 };
 
-ModMan.registerActorMod(RiseUpMod);
+ModMan.registerActorMod(KeyboardInputTestMod);

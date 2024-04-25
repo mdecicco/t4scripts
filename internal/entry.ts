@@ -37,6 +37,8 @@ t4.refreshGameObject = function(a: any) {
     a.__refresh();
 };
 
+(t4 as any).DefaultLevelActorName = '[Level]';
+
 (t4.ActorType as any) = {
     Actor: 'Actor',
     Camera: 'Camera',

@@ -28,6 +28,7 @@ interface GlobalMod extends Mod {
     onActorCreated?(actor: t4.CActor): void;
     onActorDestroy?(actor: t4.CActor): void;
     onLevelCreate?(level: t4.CLevel): void;
+    onLevelSpawn?(level: t4.CLevel): void;
     onLevelDestroy?(level: t4.CLevel): void;
     onKeyboardInput?(event: t4.KeyboardEvent): void;
     onUpdate?(deltaTime: f32): void;
@@ -35,8 +36,13 @@ interface GlobalMod extends Mod {
 }
 
 interface ActorController {
-    onShutdown?();
-    onDestroy?();
+    onShutdown?(): void;
+    onDestroy?(): void;
+    onActorCreated?(actor: t4.CActor): void;
+    onActorDestroy?(actor: t4.CActor): void;
+    onLevelCreate?(level: t4.CLevel): void;
+    onLevelSpawn?(level: t4.CLevel): void;
+    onLevelDestroy?(level: t4.CLevel): void;
     onKeyboardInput?(event: t4.KeyboardEvent): void;
     onUpdate?(deltaTime: f32): void;
     onRender?(deltaTime: f32): void;
@@ -221,6 +227,8 @@ declare namespace t4 {
      * avoided until it's strictly necessary.
      */
     function refreshGameObject(obj: any);
+
+    const DefaultLevelActorName: '[Level]';
 
     enum ActorType {
         Actor = 'Actor',

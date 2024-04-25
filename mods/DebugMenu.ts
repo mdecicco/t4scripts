@@ -20,6 +20,7 @@ class DebugMenu implements GlobalMod {
     private debugEnabled : boolean;
     private showActors : boolean;
     private showLevels : boolean;
+    private showCameras : boolean;
     private showLogs : boolean;
     private viewingActor : t4.CActor | null;
 
@@ -39,6 +40,7 @@ class DebugMenu implements GlobalMod {
         this.debugEnabled = false;
         this.showActors = Cache.getItem('show-actors', false);
         this.showLevels = Cache.getItem('show-levels', false);
+        this.showCameras = Cache.getItem('show-camera', false);
         this.showLogs = Cache.getItem('show-logs', false);
         this.viewingActor = null;
         this.logListener = null;
@@ -204,9 +206,84 @@ class DebugMenu implements GlobalMod {
         if (!this.showLevels) return;
 
         if (ImGui.Begin('Levels', ImGui.WindowFlags.None)) {
-            this.levels.forEach(l => {
-                ImGui.Text(`Level '${l.info.actorPath}'`);
-            });
+            const levels = t4.getEngine()?.getLevels();
+            if (!levels) {
+                ImGui.Text('No Levels');
+            } else {
+                levels.forEach(l => {
+                    t4.refreshGameObject(l);
+                    ImGui.Text(`Level '${l.info.actorPath}'`);
+                });
+            }
+        }
+        ImGui.End();
+    }
+
+    renderCameras() {
+        if (!this.showCameras) return;
+
+        if (ImGui.Begin(`Cameras`, ImGui.WindowFlags.None)) {
+            if (this.levels.length === 0) {
+                ImGui.Text('No Level');
+            } else {
+                const cameras = this.levels[0].getCameras();
+                if (cameras.length === 0) {
+                    ImGui.Text('No Cameras');
+                } else {
+                    cameras.forEach((camera, idx) => {
+                        t4.refreshGameObject(camera);
+                        if (ImGui.CollapsingHeader(`Camera ${idx + 1}, '${camera.name}'`, ImGui.TreeNodeFlags.None)) {
+                            const pos = camera.position;
+                            ImGui.Text('Position');
+                            ImGui.DragFloat('x###posx', pos.x, x => camera.setPosition({ x, y: pos.y, z: pos.z }));
+                            ImGui.DragFloat('y###posy', pos.y, y => camera.setPosition({ x: pos.x, y, z: pos.z }));
+                            ImGui.DragFloat('z###posz', pos.z, z => camera.setPosition({ x: pos.x, y: pos.y, z }));
+
+                            const rot = camera.rotationEuler;
+                            ImGui.Text('Rotation');
+                            ImGui.DragFloat('x###rotx', rot.x, x => camera.setRotation({ x, y: rot.y, z: rot.z }));
+                            ImGui.DragFloat('y###roty', rot.y, y => camera.setRotation({ x: rot.x, y, z: rot.z }));
+                            ImGui.DragFloat('z###rotz', rot.z, z => camera.setRotation({ x: rot.x, y: rot.y, z }));
+
+                            const scale = camera.scale;
+                            ImGui.Text('Scale');
+                            ImGui.DragFloat('x###scalex', scale.x, x => camera.setScale({ x, y: scale.y, z: scale.z }));
+                            ImGui.DragFloat('y###scaley', scale.y, y => camera.setScale({ x: scale.x, y, z: scale.z }));
+                            ImGui.DragFloat('z###scalez', scale.z, z => camera.setScale({ x: scale.x, y: scale.y, z }));
+                
+                            const visibility = camera.isVisible();
+                            if (ImGui.Checkbox('Visible', visibility)) camera.setVisibility(!visibility);
+                            if (ImGui.Checkbox('Enabled', camera.isEnabled)) camera.isEnabled = !camera.isEnabled;
+                
+                            const typeInfo = camera.typeInfo;
+                            if (typeInfo) {
+                                if (ImGui.CollapsingHeader('Type Info', ImGui.TreeNodeFlags.None)) {
+                                    ImGui.Text(`ATR: '${typeInfo.actorPath}'`);
+                                    ImGui.Text(`Geom: '${typeInfo.geomPath}'`);
+                                    ImGui.Text(`Type: '${typeInfo.typeName}'`)
+                                    ImGui.Text(`Total alive of this type: '${typeInfo.activeCount}'`);
+                                }
+                            }
+
+                            ImGui.DragFloat('field13_0x240', camera.field13_0x240, nv => camera.field13_0x240 = nv);
+                            ImGui.DragFloat('field14_0x244', camera.field14_0x244, nv => camera.field14_0x244 = nv);
+                            ImGui.DragFloat('field19_0x24c', camera.field19_0x24c, nv => camera.field19_0x24c = nv);
+                            ImGui.DragFloat('field36_0x260', camera.field36_0x260, nv => camera.field36_0x260 = nv);
+                            ImGui.DragFloat('field53_0x274', camera.field53_0x274, nv => camera.field53_0x274 = nv);
+                            ImGui.DragFloat('field70_0x288', camera.field70_0x288, nv => camera.field70_0x288 = nv);
+                            ImGui.DragFloat('field155_0x2e0', camera.field155_0x2e0, nv => camera.field155_0x2e0 = nv);
+                            ImGui.DragFloat('field184_0x300', camera.field184_0x300, nv => camera.field184_0x300 = nv);
+                            ImGui.DragFloat('field185_0x304', camera.field185_0x304, nv => camera.field185_0x304 = nv);
+                            ImGui.DragFloat('field186_0x308', camera.field186_0x308, nv => camera.field186_0x308 = nv);
+                            ImGui.DragFloat('field203_0x31c', camera.field203_0x31c, nv => camera.field203_0x31c = nv);
+                            ImGui.DragFloat('field204_0x320', camera.field204_0x320, nv => camera.field204_0x320 = nv);
+                            ImGui.DragFloat('field205_0x324', camera.field205_0x324, nv => camera.field205_0x324 = nv);
+                            ImGui.DragFloat('field206_0x328', camera.field206_0x328, nv => camera.field206_0x328 = nv);
+                            ImGui.DragFloat('field399_0x3ec', camera.field399_0x3ec, nv => camera.field399_0x3ec = nv);
+                        }
+                    });
+                }
+            }
         }
         ImGui.End();
     }
@@ -219,12 +296,25 @@ class DebugMenu implements GlobalMod {
             t4.refreshGameObject(this.viewingActor);
             const pos = actor.position;
             ImGui.Text('Position');
-            ImGui.DragFloat('x', pos.x, x => actor.setPosition({ x, y: pos.y, z: pos.z }));
-            ImGui.DragFloat('y', pos.y, y => actor.setPosition({ x: pos.x, y, z: pos.z }));
-            ImGui.DragFloat('z', pos.z, z => actor.setPosition({ x: pos.x, y: pos.y, z }));
+            ImGui.DragFloat('x###posx', pos.x, x => actor.setPosition({ x, y: pos.y, z: pos.z }));
+            ImGui.DragFloat('y###posy', pos.y, y => actor.setPosition({ x: pos.x, y, z: pos.z }));
+            ImGui.DragFloat('z###posz', pos.z, z => actor.setPosition({ x: pos.x, y: pos.y, z }));
+
+            const rot = actor.rotationEuler;
+            ImGui.Text('Rotation');
+            ImGui.DragFloat('x###rotx', rot.x, x => actor.setRotation({ x, y: rot.y, z: rot.z }));
+            ImGui.DragFloat('y###roty', rot.y, y => actor.setRotation({ x: rot.x, y, z: rot.z }));
+            ImGui.DragFloat('z###rotz', rot.z, z => actor.setRotation({ x: rot.x, y: rot.y, z }));
+
+            const scale = actor.scale;
+            ImGui.Text('Scale');
+            ImGui.DragFloat('x###scalex', scale.x, x => actor.setScale({ x, y: scale.y, z: scale.z }));
+            ImGui.DragFloat('y###scaley', scale.y, y => actor.setScale({ x: scale.x, y, z: scale.z }));
+            ImGui.DragFloat('z###scalez', scale.z, z => actor.setScale({ x: scale.x, y: scale.y, z }));
 
             const visibility = actor.isVisible();
             if (ImGui.Checkbox('Visible', visibility)) actor.setVisibility(!visibility);
+            if (ImGui.Checkbox('Enabled', actor.isEnabled)) actor.isEnabled = !actor.isEnabled;
 
             const typeInfo = actor.typeInfo;
             if (typeInfo) {
@@ -273,7 +363,6 @@ class DebugMenu implements GlobalMod {
             }
         }
         ImGui.End();
-        
     }
 
     renderMenu() {
@@ -286,6 +375,10 @@ class DebugMenu implements GlobalMod {
                 if (ImGui.MenuItem("Levels", null, this.showLevels, true)) {
                     this.showLevels = !this.showLevels;
                     Cache.setItem('show-levels', this.showLevels);
+                }
+                if (ImGui.MenuItem("Cameras", null, this.showCameras, true)) {
+                    this.showCameras = !this.showCameras;
+                    Cache.setItem('show-camera', this.showCameras);
                 }
                 if (ImGui.MenuItem("Logs", null, this.showLogs, true)) {
                     this.showLogs = !this.showLogs;
@@ -306,6 +399,7 @@ class DebugMenu implements GlobalMod {
         this.renderLogs();
         this.renderActors();
         this.renderLevels();
+        this.renderCameras();
         this.renderActorInfo();
 
         ImGui.EndGlobalDockSpace();

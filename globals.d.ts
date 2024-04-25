@@ -222,127 +222,127 @@ declare namespace fs {
      */
     class Buffer {
         /**
-         * @address 0x56851A41
+         * @address 0x56811ACD
          */
         readUInt8(): u8;
         /**
-         * @address 0x56854ACA
+         * @address 0x56814EC1
          */
         writeUInt8(value: u8): u8;
         /**
-         * @address 0x56854C0A
+         * @address 0x56815015
          */
         readUInt16(): u16;
         /**
-         * @address 0x5685382D
+         * @address 0x56813AD0
          */
         writeUInt16(value: u16): u16;
         /**
-         * @address 0x5685253B
+         * @address 0x5681268F
          */
         readUInt32(): u32;
         /**
-         * @address 0x5685769E
+         * @address 0x56817D47
          */
         writeUInt32(value: u32): u32;
         /**
-         * @address 0x568538D2
+         * @address 0x56813B93
          */
         readUInt64(): u64;
         /**
-         * @address 0x56851B9A
+         * @address 0x56811C3F
          */
         writeUInt64(value: u64): u64;
         /**
-         * @address 0x5685852B
+         * @address 0x56818CD8
          */
         readInt8(): i8;
         /**
-         * @address 0x56854723
+         * @address 0x56814ACA
          */
         writeInt8(value: i8): i8;
         /**
-         * @address 0x56856055
+         * @address 0x568165A0
          */
         readInt16(): i16;
         /**
-         * @address 0x568521D5
+         * @address 0x568122F2
          */
         writeInt16(value: i16): i16;
         /**
-         * @address 0x56852C1B
+         * @address 0x56812DF6
          */
         readInt32(): i32;
         /**
-         * @address 0x56856A96
+         * @address 0x5681707C
          */
         writeInt32(value: i32): i32;
         /**
-         * @address 0x56858A8A
+         * @address 0x56819287
          */
         readInt64(): i64;
         /**
-         * @address 0x56857C2A
+         * @address 0x5681833C
          */
         writeInt64(value: i64): i64;
         /**
-         * @address 0x56857F90
+         * @address 0x568186F2
          */
         readFloat32(): f32;
         /**
-         * @address 0x56855114
+         * @address 0x56815574
          */
         writeFloat32(value: f32): f32;
         /**
-         * @address 0x56858A49
+         * @address 0x56819241
          */
         readFloat64(): f64;
         /**
-         * @address 0x56856A7D
+         * @address 0x56817063
          */
         writeFloat64(value: f64): f64;
         /**
-         * @address 0x56851654
+         * @address 0x568116BD
          */
         getPosition(): u64;
         /**
-         * @address 0x56854DDB
+         * @address 0x568151FA
          */
         getSize(): u64;
         /**
-         * @address 0x5685745A
+         * @address 0x56817AE0
          */
         getCapacity(): u64;
         /**
-         * @address 0x56853E22
+         * @address 0x56814151
          */
         getRemaining(): u64;
         /**
-         * @address 0x568531D4
+         * @address 0x56813409
          */
         isAtEnd(): boolean;
         /**
-         * @address 0x56853B52
+         * @address 0x56813E40
          */
         seek(offsetFromStart: u64): void;
         /**
-         * @address 0x56856C8A
+         * @address 0x56817284
          */
         subBuffer(size: u64): Buffer;
         /**
-         * @address 0x56851CD0
+         * @address 0x56811DA7
          */
         readNullTerminatedString(): string;
         /**
-         * @address 0x568514DD
+         * @address 0x56811532
          */
         readString(length: u32): string;
         /**
-         * @address 0x56857595
+         * @address 0x56817C2F
          */
         writeString(str: string): boolean;
         /**
-         * @address 0x56851C6C
+         * @address 0x56811D2F
          */
         saveToFile(path: string): boolean;
     }
@@ -416,35 +416,35 @@ declare namespace fs {
     }
     
     /**
-     * @address 0x56A07870
+     * @address 0x569D8CF0
      */
     function bufferFromFile(filePath: string, param_2: OpenMode): Buffer | null;
     /**
-     * @address 0x56A07940
+     * @address 0x569D8DC0
      */
     function createBuffer(capacity: u32): Buffer;
     /**
-     * @address 0x56A079C0
+     * @address 0x569D8E40
      */
     function destroyBuffer(buffer: Buffer): void;
     /**
-     * @address 0x56857FC7
+     * @address 0x56818729
      */
     function listDirectoryEntries(dirPath: string): DirectoryEntry[] | null;
     /**
-     * @address 0x56A07C90
+     * @address 0x569D9110
      */
     function stat(path: string): FileStatus | null;
     /**
-     * @address 0x56A07FE0
+     * @address 0x569D9460
      */
     function relativePath(inputPath: string, relativeTo: string): string | null;
     /**
-     * @address 0x56A08170
+     * @address 0x569D95F0
      */
     function createDirectory(path: string): boolean;
     /**
-     * @address 0x56A08300
+     * @address 0x569D9780
      */
     function exists(path: string): boolean;
 }
@@ -459,63 +459,75 @@ declare namespace t4 {
          */
         levelPath: string | null;
         /**
-         * @address 0x56856933
+         * @address 0x56816F00
          */
-        currentLevel(): CLevel;
+        getCurrentLevel(): CLevel;
         /**
-         * @address 0x568525D1
+         * @address 0x56812DEC
+         */
+        getLevels(): CLevel[];
+        /**
+         * @address 0x5681272F
          */
         addUpdateListener(param_1: () => void): u32;
         /**
-         * @address 0x56858247
+         * @address 0x568189CC
          */
         removeUpdateListener(param_1: u32): void;
         /**
-         * @address 0x5685553D
+         * @address 0x568159D9
          */
         addRenderListener(param_1: () => void): u32;
         /**
-         * @address 0x56854D54
+         * @address 0x56815173
          */
         removeRenderListener(param_1: u32): void;
         /**
-         * @address 0x56853F08
+         * @address 0x5681425A
          */
         addActorCreateListener(param_1: (param_0: CActor) => void): u32;
         /**
-         * @address 0x56858373
+         * @address 0x56818B07
          */
         removeActorCreateListener(param_1: u32): void;
         /**
-         * @address 0x5685692E
+         * @address 0x56816EFB
          */
         addActorDestroyListener(param_1: (param_0: CActor) => void): u32;
         /**
-         * @address 0x56856F28
+         * @address 0x56817554
          */
         removeActorDestroyListener(param_1: u32): void;
         /**
-         * @address 0x56857B58
+         * @address 0x56818265
          */
         addLevelCreateListener(param_1: (param_0: CLevel) => void): u32;
         /**
-         * @address 0x56855BA0
+         * @address 0x56816082
          */
         removeLevelCreateListener(param_1: u32): void;
         /**
-         * @address 0x568516FE
+         * @address 0x56811767
          */
         addLevelDestroyListener(param_1: (param_0: CLevel) => void): u32;
         /**
-         * @address 0x56853990
+         * @address 0x56813C6A
          */
         removeLevelDestroyListener(param_1: u32): void;
         /**
-         * @address 0x568524E6
+         * @address 0x56817676
+         */
+        addLevelSpawnListener(param_1: (param_0: CLevel) => void): u32;
+        /**
+         * @address 0x56811D52
+         */
+        removeLevelSpawnListener(param_1: u32): void;
+        /**
+         * @address 0x56812630
          */
         disableInput(): void;
         /**
-         * @address 0x56853B4D
+         * @address 0x56813E3B
          */
         enableInput(): void;
     }
@@ -529,16 +541,40 @@ declare namespace t4 {
          * @size 0x74 (116 bytes)
          */
         readonly info: UnkLevelInfo;
+        
         /**
-         * @address 0x56858201
+         * @offset 0x130 (304 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        readonly levelActor: CActor | null;
+        /**
+         * @address 0x56818981
          */
         spawnActor(param_1: i32, param_2: string, param_3: string, param_4: basic_vec3f, param_5: i32): CActor;
+        /**
+         * @address 0x56818521
+         */
+        getCameras(): CCamera[];
+        /**
+         * @address 0x5681388C
+         */
+        addActorAddedListener(listener: (param_0: CActor) => void): u32;
+        /**
+         * @address 0x5681801C
+         */
+        removeActorAddedListener(listenerId: u32): void;
     }
     
     /**
-     * @size 0x21C (540 bytes)
+     * @size 0x234 (564 bytes)
      */
     class CActor {
+        /**
+         * @offset 0x1E (30 bytes)
+         * @size 0x1 (1 bytes)
+         */
+        isEnabled: boolean;
+        
         /**
          * @offset 0x23 (35 bytes)
          * @size 0x1 (1 bytes)
@@ -665,33 +701,136 @@ declare namespace t4 {
          */
         inputRelated: u32;
         /**
-         * @address 0x568512CB
+         * @address 0x568112EE
          */
         getNextActor(): CActor;
         /**
-         * @address 0x56857BB2
+         * @address 0x568182BF
          */
         getPrevActor(): CActor;
         /**
-         * @address 0x568546B0
+         * @address 0x56814A57
          */
         setPosition(position: basic_vec3f): void;
         /**
-         * @address 0x568550E2
+         * @address 0x5681553D
          */
         setRotation(fromEulerAngles: basic_vec3f): void;
         /**
-         * @address 0x56856BDB
+         * @address 0x568171CB
          */
         setScale(scale: basic_vec3f): void;
         /**
-         * @address 0x568568CA
+         * @address 0x56816E88
          */
         setVisibility(isVisible: boolean): void;
         /**
-         * @address 0x56858E54
+         * @address 0x56817E0A
          */
         isVisible(): boolean;
+        /**
+         * @address 0x56811366
+         */
+        addCollisionListener(whenCollidingWith: CActor | null, callback: (param_0: CActor, param_1: CActor) => void): u32;
+        /**
+         * @address 0x56815F3D
+         */
+        removeCollisionListener(listenerId: u32): void;
+    }
+    
+    /**
+     * @size 0x400 (1024 bytes)
+     */
+    class CCamera extends CActor {
+        /**
+         * @offset 0x240 (576 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field13_0x240: f32;
+        
+        /**
+         * @offset 0x244 (580 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field14_0x244: f32;
+        
+        /**
+         * @offset 0x24C (588 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field19_0x24c: f32;
+        
+        /**
+         * @offset 0x260 (608 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field36_0x260: f32;
+        
+        /**
+         * @offset 0x274 (628 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field53_0x274: f32;
+        
+        /**
+         * @offset 0x288 (648 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field70_0x288: f32;
+        
+        /**
+         * @offset 0x2E0 (736 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field155_0x2e0: f32;
+        
+        /**
+         * @offset 0x300 (768 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field184_0x300: f32;
+        
+        /**
+         * @offset 0x304 (772 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field185_0x304: f32;
+        
+        /**
+         * @offset 0x308 (776 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field186_0x308: f32;
+        
+        /**
+         * @offset 0x31C (796 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field203_0x31c: f32;
+        
+        /**
+         * @offset 0x320 (800 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field204_0x320: f32;
+        
+        /**
+         * @offset 0x324 (804 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field205_0x324: f32;
+        
+        /**
+         * @offset 0x328 (808 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field206_0x328: f32;
+        
+        /**
+         * @offset 0x3EC (1004 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        field399_0x3ec: f32;
     }
     
     /**
@@ -999,39 +1138,39 @@ declare namespace t4 {
     }
     
     /**
-     * @address 0x568537C9
+     * @address 0x56813A5D
      */
     function getEngine(): CGame | null;
     /**
-     * @address 0x5685122B
+     * @address 0x56811244
      */
     function sleep(milliseconds: u32): void;
     /**
-     * @address 0x56A30030
+     * @address 0x56A07110
      */
     function addEngineCreateListener(listener: (param_0: CGame) => void): u32;
     /**
-     * @address 0x56A300A0
+     * @address 0x56A07180
      */
     function removeEngineCreateListener(listenerId: u32): void;
     /**
-     * @address 0x56A30100
+     * @address 0x56A071E0
      */
     function getLiveActors(): CActor[];
     /**
-     * @address 0x569FBAC0
+     * @address 0x569CC590
      */
     function addLogListener(listener: (param_0: LogEvent) => void): u32;
     /**
-     * @address 0x569FBB30
+     * @address 0x569CC600
      */
     function removeLogListener(listenerId: u32): void;
     /**
-     * @address 0x569EF4D0
+     * @address 0x569BDA60
      */
     function addKeyboardListener(listener: (param_0: KeyboardEvent) => void): u32;
     /**
-     * @address 0x569EF540
+     * @address 0x569BDAD0
      */
     function removeKeyboardListener(listenerId: u32): void;
 }
@@ -1763,71 +1902,71 @@ declare namespace ImGui {
      */
     class ImDrawList {
         /**
-         * @address 0x5685793C
+         * @address 0x5681800D
          */
         AddLine(p1: ImVec2, p2: ImVec2, color: u32, thickness: f32): void;
         /**
-         * @address 0x568522A2
+         * @address 0x568123E2
          */
         AddRect(min: ImVec2, max: ImVec2, color: u32, rounding: f32, flags: i32, thickness: f32): void;
         /**
-         * @address 0x56854048
+         * @address 0x568143AE
          */
         AddRectFilled(min: ImVec2, max: ImVec2, color: u32, rounding: f32, flags: i32): void;
         /**
-         * @address 0x56857AE5
+         * @address 0x568181E8
          */
         AddRectFilledMultiColor(min: ImVec2, max: ImVec2, colorUpperLeft: u32, colorUpperRight: u32, colorBottomRight: u32, colorBottomLeft: u32): void;
         /**
-         * @address 0x568565D7
+         * @address 0x56816B63
          */
         AddQuad(p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, color: u32, thickness: f32): void;
         /**
-         * @address 0x5685506A
+         * @address 0x568154BB
          */
         AddQuadFilled(p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, color: u32): void;
         /**
-         * @address 0x568534DB
+         * @address 0x56813747
          */
         AddTriangle(p1: ImVec2, p2: ImVec2, p3: ImVec2, color: u32, thickness: f32): void;
         /**
-         * @address 0x568586C5
+         * @address 0x56818E8B
          */
         AddTriangleFilled(p1: ImVec2, p2: ImVec2, p3: ImVec2, color: u32): void;
         /**
-         * @address 0x56851951
+         * @address 0x568119C9
          */
         AddCircle(center: ImVec2, radius: f32, color: u32, numSegments: i32, thickness: f32): void;
         /**
-         * @address 0x568560F0
+         * @address 0x5681663B
          */
         AddCircleFilled(center: ImVec2, radius: f32, color: u32, numSegments: i32): void;
         /**
-         * @address 0x568582E2
+         * @address 0x56818A6C
          */
         AddNgon(center: ImVec2, radius: f32, color: u32, numSegments: i32, thickness: f32): void;
         /**
-         * @address 0x56856DA7
+         * @address 0x568173A1
          */
         AddNgonFilled(center: ImVec2, radius: f32, color: u32, numSegments: i32): void;
         /**
-         * @address 0x568583F5
+         * @address 0x56818B8E
          */
         AddEllipse(center: ImVec2, radius: ImVec2, color: u32, rotation: f32, numSegments: i32, thickness: f32): void;
         /**
-         * @address 0x56858364
+         * @address 0x56818AF8
          */
         AddEllipseFilled(center: ImVec2, radius: ImVec2, color: u32, rotation: f32, numSegments: i32): void;
         /**
-         * @address 0x56A47820
+         * @address 0x56A1F3E0
          */
         AddText(position: ImVec2, color: u32, text: string): void;
         /**
-         * @address 0x568563CA
+         * @address 0x56816933
          */
         AddBezierCubic(p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, color: u32, thickness: f32, numSegments: i32): void;
         /**
-         * @address 0x56855E11
+         * @address 0x56816343
          */
         AddBezierQuadratic(p1: ImVec2, p2: ImVec2, p3: ImVec2, color: u32, thickness: f32, numSegments: i32): void;
     }
@@ -2035,861 +2174,861 @@ declare namespace ImGui {
     }
     
     /**
-     * @address 0x5685426E
+     * @address 0x568145DE
      */
     function GetCurrentContext(): ImGuiContext | null;
     /**
-     * @address 0x56857D29
+     * @address 0x5681844F
      */
     function SetCurrentContext(ctx: ImGuiContext): void;
     /**
-     * @address 0x568522CF
+     * @address 0x5681240F
      */
     function GetIO(): ImGuiIO | null;
     /**
-     * @address 0x56857207
+     * @address 0x56817860
      */
     function GetStyle(): ImGuiStyle | null;
     /**
-     * @address 0x56A44460
+     * @address 0x56A1C020
      */
     function ShowDemoWindow(isOpen: boolean): boolean;
     /**
-     * @address 0x56A444C0
+     * @address 0x56A1C080
      */
     function ShowMetricsWindow(isOpen: boolean): boolean;
     /**
-     * @address 0x56A44520
+     * @address 0x56A1C0E0
      */
     function ShowDebugLogWindow(isOpen: boolean): boolean;
     /**
-     * @address 0x56A44580
+     * @address 0x56A1C140
      */
     function ShowIDStackToolWindow(isOpen: boolean): boolean;
     /**
-     * @address 0x56A445E0
+     * @address 0x56A1C1A0
      */
     function ShowAboutWindow(isOpen: boolean): boolean;
     /**
-     * @address 0x56858332
+     * @address 0x56818AC6
      */
     function ShowStyleEditor(targetStyle: ImGuiStyle): void;
     /**
-     * @address 0x568523DD
+     * @address 0x5681251D
      */
     function ShowStyleSelector(label: string): boolean;
     /**
-     * @address 0x568584B3
+     * @address 0x56818C51
      */
     function ShowFontSelector(label: string): void;
     /**
-     * @address 0x56856938
+     * @address 0x56816F0A
      */
     function ShowUserGuide(): void;
     /**
-     * @address 0x56856AA5
+     * @address 0x5681708B
      */
     function GetVersion(): string | null;
     /**
-     * @address 0x56852135
+     * @address 0x5681223E
      */
     function StyleColorsDark(targetStyle: ImGuiStyle): void;
     /**
-     * @address 0x56856F6E
+     * @address 0x5681759F
      */
     function StyleColorsLight(targetStyle: ImGuiStyle): void;
     /**
-     * @address 0x568565A0
+     * @address 0x56816B2C
      */
     function StyleColorsClassic(targetStyle: ImGuiStyle): void;
     /**
-     * @address 0x56A44640
+     * @address 0x56A1C200
      */
     function Begin(title: string, flags: WindowFlags): boolean;
     /**
-     * @address 0x568540E8
+     * @address 0x56814458
      */
     function End(): void;
     /**
-     * @address 0x56A446B0
+     * @address 0x56A1C270
      */
     function BeginChild(id: u32, size: ImVec2, childFlags: ChildFlags, windowFlags: WindowFlags): boolean;
     /**
-     * @address 0x56856E6A
+     * @address 0x56817487
      */
     function EndChild(): void;
     /**
-     * @address 0x56854D04
+     * @address 0x56815123
      */
     function IsWindowAppearing(): boolean;
     /**
-     * @address 0x568569AB
+     * @address 0x56816F87
      */
     function IsWindowCollapsed(): boolean;
     /**
-     * @address 0x56A44720
+     * @address 0x56A1C2E0
      */
     function IsWindowFocused(flags: FocusedFlags): boolean;
     /**
-     * @address 0x56855BFA
+     * @address 0x568160EB
      */
     function IsWindowHovered(param_1: i32): boolean;
     /**
-     * @address 0x56856D84
+     * @address 0x5681737E
      */
     function GetWindowDrawList(): ImDrawList | null;
     /**
-     * @address 0x56851938
+     * @address 0x568119B0
      */
     function GetWindowPos(): ImVec2;
     /**
-     * @address 0x5685652D
+     * @address 0x56816AAF
      */
     function GetWindowSize(): ImVec2;
     /**
-     * @address 0x568551FA
+     * @address 0x56815669
      */
     function GetWindowWidth(): f32;
     /**
-     * @address 0x568522B6
+     * @address 0x568123F6
      */
     function GetWindowHeight(): f32;
     /**
-     * @address 0x56A447B0
+     * @address 0x56A1C370
      */
     function SetNextWindowPos(pos: ImVec2): void;
     /**
-     * @address 0x56A44810
+     * @address 0x56A1C3D0
      */
     function SetNextWindowSize(size: ImVec2): void;
     /**
-     * @address 0x56A44880
+     * @address 0x56A1C440
      */
     function SetNextWindowSizeConstraints(minSize: ImVec2, maxSize: ImVec2): void;
     /**
-     * @address 0x56857284
+     * @address 0x568178E2
      */
     function SetNextWindowContentSize(size: ImVec2): void;
     /**
-     * @address 0x56A448E0
+     * @address 0x56A1C4A0
      */
     function SetNextWindowCollapsed(isCollapsed: boolean): void;
     /**
-     * @address 0x5685413D
+     * @address 0x568144AD
      */
     function SetNextWindowFocus(): void;
     /**
-     * @address 0x568550BF
+     * @address 0x5681551A
      */
     function SetNextWindowScroll(scrollValue: ImVec2): void;
     /**
-     * @address 0x56851168
+     * @address 0x56811181
      */
     function SetNextWindowBgAlpha(alpha: f32): void;
     /**
-     * @address 0x56A44940
+     * @address 0x56A1C500
      */
     function SetWindowPos(position: ImVec2): void;
     /**
-     * @address 0x56A449A0
+     * @address 0x56A1C560
      */
     function SetWindowSize(size: ImVec2): void;
     /**
-     * @address 0x56A44A00
+     * @address 0x56A1C5C0
      */
     function SetWindowCollapsed(isCollapsed: boolean): void;
     /**
-     * @address 0x56A44A60
+     * @address 0x56A1C620
      */
     function SetWindowFocus(): void;
     /**
-     * @address 0x5685355D
+     * @address 0x568137C9
      */
     function SetWindowFontScale(fontScale: f32): void;
     /**
-     * @address 0x56855155
+     * @address 0x568155BA
      */
     function GetContentRegionAvail(): ImVec2;
     /**
-     * @address 0x568556A0
+     * @address 0x56815B41
      */
     function GetContentRegionMax(): ImVec2;
     /**
-     * @address 0x5685503D
+     * @address 0x56815484
      */
     function GetWindowContentRegionMin(): ImVec2;
     /**
-     * @address 0x5685214E
+     * @address 0x5681225C
      */
     function GetWindowContentRegionMax(): ImVec2;
     /**
-     * @address 0x56851C26
+     * @address 0x56811CDF
      */
     function GetScrollX(): f32;
     /**
-     * @address 0x5685557E
+     * @address 0x56815A1A
      */
     function GetScrollY(): f32;
     /**
-     * @address 0x568548BD
+     * @address 0x56814C91
      */
     function SetScrollX(scrollX: f32): void;
     /**
-     * @address 0x56851DCF
+     * @address 0x56811EB0
      */
     function SetScrollY(scrollY: f32): void;
     /**
-     * @address 0x56857C8E
+     * @address 0x568183A0
      */
     function GetScrollMaxX(): f32;
     /**
-     * @address 0x56855F74
+     * @address 0x568164B5
      */
     function GetScrollMaxY(): f32;
     /**
-     * @address 0x568510C8
+     * @address 0x568110D2
      */
     function SetScrollHereX(centerRatioX: f32): void;
     /**
-     * @address 0x568517D0
+     * @address 0x56811843
      */
     function SetScrollHereY(centerRatioY: f32): void;
     /**
-     * @address 0x568542CD
+     * @address 0x56814647
      */
     function SetScrollFromPosX(localX: f32, centerRatioX: f32): void;
     /**
-     * @address 0x5685315C
+     * @address 0x56813387
      */
     function SetScrollFromPosY(localY: f32, centerRatioY: f32): void;
     /**
-     * @address 0x56852793
+     * @address 0x56812905
      */
     function PushFont(font: ImFont): void;
     /**
-     * @address 0x5685127B
+     * @address 0x56811299
      */
     function PopFont(): void;
     /**
-     * @address 0x56A44AC0
+     * @address 0x56A1C680
      */
     function PushStyleColor(index: Color, color: ImVec4): void;
     /**
-     * @address 0x56A44B20
+     * @address 0x56A1C6E0
      */
     function PopStyleColor(): void;
     /**
-     * @address 0x56A44B90
+     * @address 0x56A1C750
      */
     function PushStyleVarF32(index: StyleVar, value: f32): void;
     /**
-     * @address 0x56A44BF0
+     * @address 0x56A1C7B0
      */
     function PushStyleVarVec2(index: StyleVar, value: ImVec2): void;
     /**
-     * @address 0x56A44C50
+     * @address 0x56A1C810
      */
     function PopStyleVar(): void;
     /**
-     * @address 0x56854C87
+     * @address 0x56815097
      */
     function PushTabStop(tabStop: boolean): void;
     /**
-     * @address 0x56856997
+     * @address 0x56816F6E
      */
     function PopTabStop(): void;
     /**
-     * @address 0x568539EF
+     * @address 0x56813CCE
      */
     function PushButtonRepeat(repeat: boolean): void;
     /**
-     * @address 0x56855632
+     * @address 0x56815AD3
      */
     function PopButtonRepeat(): void;
     /**
-     * @address 0x56857739
+     * @address 0x56817DE7
      */
     function PushItemWidth(itemWidth: f32): void;
     /**
-     * @address 0x56855EDE
+     * @address 0x5681641A
      */
     function PopItemWidth(): void;
     /**
-     * @address 0x56857833
+     * @address 0x56817EF0
      */
     function SetNextItemWidth(itemWidth: f32): void;
     /**
-     * @address 0x56852DF6
+     * @address 0x56812FE0
      */
     function CalcItemWidth(): f32;
     /**
-     * @address 0x5685489A
+     * @address 0x56814C6E
      */
     function PushTextWrapPos(wrapLocalPosX: f32): void;
     /**
-     * @address 0x56855556
+     * @address 0x568159F2
      */
     function PopTextWrapPos(): void;
     /**
-     * @address 0x56854DD1
+     * @address 0x568151F0
      */
     function GetFont(): ImFont | null;
     /**
-     * @address 0x568571E4
+     * @address 0x5681783D
      */
     function GetFontSize(): f32;
     /**
-     * @address 0x56855C9F
+     * @address 0x568161A9
      */
     function GetFontTexUvWhitePixel(): ImVec2;
     /**
-     * @address 0x56A44CD0
+     * @address 0x56A1C890
      */
     function GetStyleColorVec4(index: Color): ImVec4;
     /**
-     * @address 0x56851CB2
+     * @address 0x56811D84
      */
     function GetCursorScreenPos(): ImVec2;
     /**
-     * @address 0x5685617C
+     * @address 0x568166C7
      */
     function SetCursorScreenPos(position: ImVec2): void;
     /**
-     * @address 0x56858931
+     * @address 0x5681911A
      */
     function GetCursorPos(): ImVec2;
     /**
-     * @address 0x56851686
+     * @address 0x568116EF
      */
     function GetCursorPosX(): f32;
     /**
-     * @address 0x5685633E
+     * @address 0x5681689D
      */
     function GetCursorPosY(): f32;
     /**
-     * @address 0x56856541
+     * @address 0x56816AC3
      */
     function SetCursorPos(localPosition: ImVec2): void;
     /**
-     * @address 0x56851E65
+     * @address 0x56811F55
      */
     function SetCursorPosX(localX: f32): void;
     /**
-     * @address 0x568575EA
+     * @address 0x56817C89
      */
     function SetCursorPosY(localY: f32): void;
     /**
-     * @address 0x5685725C
+     * @address 0x568178B5
      */
     function GetCursorStartPos(): ImVec2;
     /**
-     * @address 0x56857CD4
+     * @address 0x568183F0
      */
     function Separator(): void;
     /**
-     * @address 0x56A44D40
+     * @address 0x56A1C900
      */
     function SameLine(offsetX: f32, spacingX: f32): void;
     /**
-     * @address 0x56853E8B
+     * @address 0x568141C9
      */
     function NewLine(): void;
     /**
-     * @address 0x56855F88
+     * @address 0x568164C9
      */
     function Spacing(): void;
     /**
-     * @address 0x56854EB7
+     * @address 0x568152E0
      */
     function Dummy(size: ImVec2): void;
     /**
-     * @address 0x56855E5C
+     * @address 0x56816393
      */
     function Indent(indentWidth: f32): void;
     /**
-     * @address 0x56851D25
+     * @address 0x56811DFC
      */
     function Unindent(indentWidth: f32): void;
     /**
-     * @address 0x56856F32
+     * @address 0x5681755E
      */
     function BeginGroup(): void;
     /**
-     * @address 0x56857DF1
+     * @address 0x5681852B
      */
     function EndGroup(): void;
     /**
-     * @address 0x56855772
+     * @address 0x56815C1D
      */
     function AlignTextToFramePadding(): void;
     /**
-     * @address 0x56857A31
+     * @address 0x56818125
      */
     function GetTextLineHeight(): f32;
     /**
-     * @address 0x568519B5
+     * @address 0x56811A3C
      */
     function GetTextLineHeightWithSpacing(): f32;
     /**
-     * @address 0x56858C47
+     * @address 0x56819471
      */
     function GetFrameHeight(): f32;
     /**
-     * @address 0x56857C75
+     * @address 0x56818387
      */
     function GetFrameHeightWithSpacing(): f32;
     /**
-     * @address 0x56858A58
+     * @address 0x56819250
      */
     function PushID(id: i32): void;
     /**
-     * @address 0x56855498
+     * @address 0x5681592F
      */
     function PopID(): void;
     /**
-     * @address 0x568536E3
+     * @address 0x56813968
      */
     function GetID(id: string): u32;
     /**
-     * @address 0x56A44DB0
+     * @address 0x56A1C970
      */
     function Text(text: string): void;
     /**
-     * @address 0x56A44E10
+     * @address 0x56A1C9D0
      */
     function TextColored(color: ImVec4, text: string): void;
     /**
-     * @address 0x56A44E70
+     * @address 0x56A1CA30
      */
     function TextDisabled(text: string): void;
     /**
-     * @address 0x56A44ED0
+     * @address 0x56A1CA90
      */
     function TextWrapped(text: string): void;
     /**
-     * @address 0x56A44F30
+     * @address 0x56A1CAF0
      */
     function LabelText(label: string, text: string): void;
     /**
-     * @address 0x56A44F90
+     * @address 0x56A1CB50
      */
     function BulletText(text: string): void;
     /**
-     * @address 0x568519C9
+     * @address 0x56811A50
      */
     function SeparatorText(label: string): void;
     /**
-     * @address 0x56858017
+     * @address 0x5681877E
      */
     function Button(label: string, size: ImVec2): boolean;
     /**
-     * @address 0x56858026
+     * @address 0x5681878D
      */
     function SmallButton(label: string): boolean;
     /**
-     * @address 0x56A45000
+     * @address 0x56A1CBC0
      */
     function InvisibleButton(id: string, size: ImVec2, flags: ButtonFlags): boolean;
     /**
-     * @address 0x56A45060
+     * @address 0x56A1CC20
      */
     function ArrowButton(id: string, direction: Direction): boolean;
     /**
-     * @address 0x56A450C0
+     * @address 0x56A1CC80
      */
     function Checkbox(label: string, value: boolean): boolean;
     /**
-     * @address 0x56853869
+     * @address 0x56813B1B
      */
     function RadioButton(label: string, active: boolean): boolean;
     /**
-     * @address 0x56A45160
+     * @address 0x56A1CD20
      */
     function ProgressBar(fraction: f32): void;
     /**
-     * @address 0x56853AF3
+     * @address 0x56813DDC
      */
     function Bullet(): void;
     /**
-     * @address 0x56A452A0
+     * @address 0x56A1CE60
      */
     function Image(textureId: u32, size: ImVec2): void;
     /**
-     * @address 0x56A453E0
+     * @address 0x56A1CFA0
      */
     function ImageButton(textureId: u32, size: ImVec2): boolean;
     /**
-     * @address 0x56A454C0
+     * @address 0x56A1D080
      */
     function DragFloat(label: string, value: f32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A455B0
+     * @address 0x56A1D170
      */
     function DragFloat2(label: string, value: basic_vec2f, onChange: (param_0: basic_vec2f) => void): boolean;
     /**
-     * @address 0x56A45690
+     * @address 0x56A1D250
      */
     function DragFloat3(label: string, value: basic_vec3f, onChange: (param_0: basic_vec3f) => void): boolean;
     /**
-     * @address 0x56A45770
+     * @address 0x56A1D330
      */
     function DragFloat4(label: string, value: basic_vec4f, onChange: (param_0: basic_vec4f) => void): boolean;
     /**
-     * @address 0x56A45840
+     * @address 0x56A1D400
      */
     function DragInt(label: string, value: i32, onChange: (param_0: i32) => void): boolean;
     /**
-     * @address 0x56A45910
+     * @address 0x56A1D4D0
      */
     function DragInt2(label: string, value: basic_vec2i, onChange: (param_0: basic_vec2i) => void): boolean;
     /**
-     * @address 0x56A459E0
+     * @address 0x56A1D5A0
      */
     function DragInt3(label: string, value: basic_vec3i, onChange: (param_0: basic_vec3i) => void): boolean;
     /**
-     * @address 0x56A45AB0
+     * @address 0x56A1D670
      */
     function DragInt4(label: string, value: basic_vec4i, onChange: (param_0: basic_vec4i) => void): boolean;
     /**
-     * @address 0x56A45B80
+     * @address 0x56A1D740
      */
     function SliderFloat(label: string, value: f32, min: f32, max: f32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A45C70
+     * @address 0x56A1D830
      */
     function SliderFloat2(label: string, value: basic_vec2f, min: f32, max: f32, onChange: (param_0: basic_vec2f) => void): boolean;
     /**
-     * @address 0x56A45D60
+     * @address 0x56A1D920
      */
     function SliderFloat3(label: string, value: basic_vec3f, min: f32, max: f32, onChange: (param_0: basic_vec3f) => void): boolean;
     /**
-     * @address 0x56A45E50
+     * @address 0x56A1DA10
      */
     function SliderFloat4(label: string, value: basic_vec4f, min: f32, max: f32, onChange: (param_0: basic_vec4f) => void): boolean;
     /**
-     * @address 0x56A45F40
+     * @address 0x56A1DB00
      */
     function SliderAngle(label: string, value: f32, min: f32, max: f32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A46030
+     * @address 0x56A1DBF0
      */
     function SliderInt(label: string, value: i32, min: i32, max: i32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A46100
+     * @address 0x56A1DCC0
      */
     function SliderInt2(label: string, value: basic_vec2i, min: i32, max: i32, onChange: (param_0: basic_vec2i) => void): boolean;
     /**
-     * @address 0x56A461D0
+     * @address 0x56A1DD90
      */
     function SliderInt3(label: string, value: basic_vec3i, min: i32, max: i32, onChange: (param_0: basic_vec3i) => void): boolean;
     /**
-     * @address 0x56A462A0
+     * @address 0x56A1DE60
      */
     function SliderInt4(label: string, value: basic_vec4i, min: i32, max: i32, onChange: (param_0: basic_vec4i) => void): boolean;
     /**
-     * @address 0x56A46390
+     * @address 0x56A1DF50
      */
     function VSliderFloat(label: string, size: ImVec2, value: f32, min: f32, max: f32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A46470
+     * @address 0x56A1E030
      */
     function VSliderInt(label: string, size: ImVec2, value: i32, min: i32, max: i32, onChange: (param_0: i32) => void): boolean;
     /**
-     * @address 0x56A465E0
+     * @address 0x56A1E1A0
      */
     function InputText(label: string, value: string, onChange: (param_0: string) => void): boolean;
     /**
-     * @address 0x56A46740
+     * @address 0x56A1E300
      */
     function InputTextMultiline(label: string, value: string, size: ImVec2, onChange: (param_0: string) => void): boolean;
     /**
-     * @address 0x56A468B0
+     * @address 0x56A1E470
      */
     function InputTextWithHint(label: string, value: string, onChange: string, param_4: (param_0: string) => void): boolean;
     /**
-     * @address 0x56A46990
+     * @address 0x56A1E550
      */
     function InputFloat(label: string, value: f32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A46A60
+     * @address 0x56A1E620
      */
     function InputFloat2(label: string, value: basic_vec2f, onChange: (param_0: basic_vec2f) => void): boolean;
     /**
-     * @address 0x56A46B20
+     * @address 0x56A1E6E0
      */
     function InputFloat3(label: string, value: basic_vec3f, onChange: (param_0: basic_vec3f) => void): boolean;
     /**
-     * @address 0x56A46BE0
+     * @address 0x56A1E7A0
      */
     function InputFloat4(label: string, value: basic_vec4f, onChange: (param_0: basic_vec4f) => void): boolean;
     /**
-     * @address 0x56A46CA0
+     * @address 0x56A1E860
      */
     function InputInt(label: string, value: i32, onChange: (param_0: i32) => void): boolean;
     /**
-     * @address 0x56A46D50
+     * @address 0x56A1E910
      */
     function InputInt2(label: string, value: basic_vec2i, onChange: (param_0: basic_vec2i) => void): boolean;
     /**
-     * @address 0x56A46E00
+     * @address 0x56A1E9C0
      */
     function InputInt3(label: string, value: basic_vec3i, onChange: (param_0: basic_vec3i) => void): boolean;
     /**
-     * @address 0x56A46EB0
+     * @address 0x56A1EA70
      */
     function InputInt4(label: string, value: basic_vec4i, onChange: (param_0: basic_vec4i) => void): boolean;
     /**
-     * @address 0x56A46F60
+     * @address 0x56A1EB20
      */
     function ColorEdit3(label: string, value: basic_vec3f, onChange: (param_0: basic_vec3f) => void): boolean;
     /**
-     * @address 0x56A47010
+     * @address 0x56A1EBD0
      */
     function ColorEdit4(label: string, value: basic_vec4f, onChange: (param_0: basic_vec4f) => void): boolean;
     /**
-     * @address 0x56A470C0
+     * @address 0x56A1EC80
      */
     function ColorPicker3(label: string, value: basic_vec3f, onChange: (param_0: basic_vec3f) => void): boolean;
     /**
-     * @address 0x56A47170
+     * @address 0x56A1ED30
      */
     function ColorPicker4(label: string, value: basic_vec4f, onChange: (param_0: basic_vec4f) => void): boolean;
     /**
-     * @address 0x56A471D0
+     * @address 0x56A1ED90
      */
     function SetColorEditOptions(flags: ColorEditFlags): void;
     /**
-     * @address 0x568573B5
+     * @address 0x56817A31
      */
     function TreeNode(label: string): boolean;
     /**
-     * @address 0x56A47230
+     * @address 0x56A1EDF0
      */
     function TreeNodeEx(label: string, flags: TreeNodeFlags): boolean;
     /**
-     * @address 0x56A47290
+     * @address 0x56A1EE50
      */
     function TreePush(id: string): void;
     /**
-     * @address 0x56857CA7
+     * @address 0x568183BE
      */
     function TreePop(): void;
     /**
-     * @address 0x56852216
+     * @address 0x56812342
      */
     function GetTreeNodeToLabelSpacing(): f32;
     /**
-     * @address 0x56A472F0
+     * @address 0x56A1EEB0
      */
     function CollapsingHeader(label: string, flags: TreeNodeFlags): boolean;
     /**
-     * @address 0x56A47350
+     * @address 0x56A1EF10
      */
     function SetNextItemOpen(isOpen: boolean): void;
     /**
-     * @address 0x56A473E0
+     * @address 0x56A1EFA0
      */
     function Selectable(label: string, isSelected: boolean): boolean;
     /**
-     * @address 0x568521BC
+     * @address 0x568122D4
      */
     function BeginMenuBar(): boolean;
     /**
-     * @address 0x56856DC0
+     * @address 0x568173C4
      */
     function EndMenuBar(): void;
     /**
-     * @address 0x56853800
+     * @address 0x56813AA3
      */
     function BeginMainMenuBar(): boolean;
     /**
-     * @address 0x568566E5
+     * @address 0x56816C7B
      */
     function EndMainMenuBar(): void;
     /**
-     * @address 0x56852F40
+     * @address 0x5681313E
      */
     function BeginMenu(label: string, isEnabled: boolean): boolean;
     /**
-     * @address 0x568558A8
+     * @address 0x56815D62
      */
     function EndMenu(): void;
     /**
-     * @address 0x56A47450
+     * @address 0x56A1F010
      */
     function MenuItem(label: string, shortcut: string | null, isSelected: boolean, isEnabled: boolean): boolean;
     /**
-     * @address 0x56851136
+     * @address 0x56811145
      */
     function BeginTooltip(): boolean;
     /**
-     * @address 0x568571AD
+     * @address 0x56817801
      */
     function EndTooltip(): void;
     /**
-     * @address 0x56A474C0
+     * @address 0x56A1F080
      */
     function SetTooltip(tooltip: string): void;
     /**
-     * @address 0x56852801
+     * @address 0x56812982
      */
     function BeginItemTooltip(): boolean;
     /**
-     * @address 0x56A47520
+     * @address 0x56A1F0E0
      */
     function SetItemTooltip(tooltip: string): void;
     /**
-     * @address 0x56A47580
+     * @address 0x56A1F140
      */
     function BeginPopup(id: string, flags: WindowFlags): boolean;
     /**
-     * @address 0x56A475F0
+     * @address 0x56A1F1B0
      */
     function BeginPopupModal(id: string, isOpen: boolean, flags: WindowFlags): boolean;
     /**
-     * @address 0x5685367A
+     * @address 0x568138FF
      */
     function EndPopup(): void;
     /**
-     * @address 0x56A47650
+     * @address 0x56A1F210
      */
     function OpenPopup(popupId: string): void;
     /**
-     * @address 0x56854912
+     * @address 0x56814CEB
      */
     function BeginDisabled(isDisabled: boolean): void;
     /**
-     * @address 0x56852BA8
+     * @address 0x56812D79
      */
     function EndDisabled(): void;
     /**
-     * @address 0x56856A19
+     * @address 0x56816FF5
      */
     function PushClipRect(min: ImVec2, max: ImVec2, doIntersectWithCurrent: boolean): void;
     /**
-     * @address 0x568516E5
+     * @address 0x5681174E
      */
     function PopClipRect(): void;
     /**
-     * @address 0x5685159B
+     * @address 0x568115FF
      */
     function IsItemActive(): boolean;
     /**
-     * @address 0x56855745
+     * @address 0x56815BF0
      */
     function IsItemFocused(): boolean;
     /**
-     * @address 0x56856BA9
+     * @address 0x56817194
      */
     function IsItemVisible(): boolean;
     /**
-     * @address 0x56856D93
+     * @address 0x5681738D
      */
     function IsItemEdited(): boolean;
     /**
-     * @address 0x56856447
+     * @address 0x568169BF
      */
     function IsItemActivated(): boolean;
     /**
-     * @address 0x56851596
+     * @address 0x568115FA
      */
     function IsItemDeactivated(): boolean;
     /**
-     * @address 0x56852022
+     * @address 0x56812121
      */
     function IsItemDeactivatedAfterEdit(): boolean;
     /**
-     * @address 0x568550F1
+     * @address 0x5681554C
      */
     function IsItemToggledOpen(): boolean;
     /**
-     * @address 0x56852C07
+     * @address 0x56812DDD
      */
     function IsAnyItemHovered(): boolean;
     /**
-     * @address 0x568559D9
+     * @address 0x56815EA2
      */
     function IsAnyItemActive(): boolean;
     /**
-     * @address 0x56857996
+     * @address 0x56818076
      */
     function IsAnyItemFocused(): boolean;
     /**
-     * @address 0x56858BD4
+     * @address 0x568193F9
      */
     function GetItemID(): u32;
     /**
-     * @address 0x5685439A
+     * @address 0x5681471E
      */
     function GetItemRectMin(): ImVec2;
     /**
-     * @address 0x56855434
+     * @address 0x568158C6
      */
     function GetItemRectMax(): ImVec2;
     /**
-     * @address 0x568549B7
+     * @address 0x56814D9F
      */
     function GetItemRectSize(): ImVec2;
     /**
-     * @address 0x5685786F
+     * @address 0x56817F36
      */
     function GetMainViewport(): ImGuiViewport | null;
     /**
-     * @address 0x56855BDC
+     * @address 0x568160C8
      */
     function IsKeyDown(param_1: Key): boolean;
     /**
-     * @address 0x5685146A
+     * @address 0x568114B0
      */
     function IsKeyPressed(param_1: Key, param_2: boolean): boolean;
     /**
-     * @address 0x56855696
+     * @address 0x56815B37
      */
     function IsKeyReleased(param_1: Key): boolean;
     /**
-     * @address 0x568572A7
+     * @address 0x5681790F
      */
     function IsKeyChordPressed(param_1: i32): boolean;
     /**
-     * @address 0x56856FAA
+     * @address 0x568175E5
      */
     function GetKeyPressedAmount(param_1: Key, param_2: f32, param_3: f32): i32;
     /**
-     * @address 0x56854813
+     * @address 0x56814BD8
      */
     function GetKeyName(param_1: Key): string | null;
     /**
-     * @address 0x568528D3
+     * @address 0x56812A5E
      */
     function IsMouseHoveringRect(min: ImVec2, max: ImVec2, clip: boolean): boolean;
     /**
-     * @address 0x568584FE
+     * @address 0x56818CA6
      */
     function IsAnyMouseDown(): boolean;
     /**
-     * @address 0x5685639D
+     * @address 0x56816901
      */
     function GetMousePos(): ImVec2;
     /**
-     * @address 0x5685517D
+     * @address 0x568155DD
      */
     function GetClipboardText(): string | null;
     /**
-     * @address 0x56858102
+     * @address 0x56818873
      */
     function SetClipboardText(param_1: string): void;
     /**
-     * @address 0x56A477F0
+     * @address 0x56A1F3B0
      */
     function BeginGlobalDockSpace(withMenu: boolean): void;
     /**
-     * @address 0x568540E8
+     * @address 0x56814458
      */
     function EndGlobalDockSpace(): void;
 }
 declare namespace sys {
     /**
-     * @address 0x56A8B780
+     * @address 0x56A639B0
      */
     function loadDLL(param_1: string): boolean;
 }
