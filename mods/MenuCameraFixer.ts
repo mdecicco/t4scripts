@@ -1,4 +1,4 @@
-import { ModMan } from '../internal/mod_mgr';
+import { GlobalMod, ModMan } from '../internal/mod_mgr';
 
 class MenuCameraFixerMod implements GlobalMod {
     // Game entities

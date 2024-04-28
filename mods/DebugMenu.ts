@@ -1,5 +1,6 @@
 import { Cache } from '../internal/mod_cache';
-import { ModMan } from '../internal/mod_mgr';
+import { GlobalMod, ModMan } from '../internal/mod_mgr';
+import { vec2, vec3, vec4 } from '../utils/math';
 
 class DebugMenu implements GlobalMod {
     // Game entities
@@ -131,7 +132,7 @@ class DebugMenu implements GlobalMod {
 
         if (ImGui.Begin('Logs', ImGui.WindowFlags.None)) {
             this.logs.forEach(log => {
-                const color = new vec4f(1, 1, 1, 1);
+                const color = new vec4(1, 1, 1, 1);
                 switch (log.level) {
                     case t4.LogLevel.Warning: {
                         color.x = 1;
@@ -154,50 +155,114 @@ class DebugMenu implements GlobalMod {
         ImGui.End();
     }
 
+    renderActorTooltip(a: t4.CActor) {
+        if (ImGui.BeginItemTooltip()) {
+            const address = t4.getGameObjectId(a);
+            const pos = a.position;
+            const id = `0x${address.toString(16)}`;
+            const flags = a.actorFlags.toString(2);
+            ImGui.Text(`ID: ${id}`);
+            ImGui.Text(`Position: ${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}`);
+            ImGui.Text(`Flags: 0b${flags}`);
+            ImGui.Text(`Collision Flags: 0b${a.collisionFlags.toString(2)}`);
+            ImGui.Text(`Touches: 0b${a.touches.toString(2)}`);
+            ImGui.Text(`Using Quat Rotation: 0b${a.usingQuatRotation ? 'Yes' : 'No'}`)
+            ImGui.Text(`Mode: ${a.mode} (0b${a.mode.toString(2)})`);
+            ImGui.Text(`Nudge: ${a.nudge} (0b${a.nudge.toString(2)}`);
+            ImGui.Text(`Visibility: ${a.isVisible ? 'Visible' : 'Invisible'}`)
+            ImGui.EndTooltip();
+        }
+    }
+
+    renderActorList(actors: t4.CActor[]) {
+        const groups : { [k: string]: t4.CActor[] } = {};
+        const typeIds : string[] = [];
+        actors.forEach(a => {
+            const type = a.typeInfo?.typeName || 'No Type';
+            if (type in groups) groups[type].push(a);
+            else {
+                typeIds.push(type);
+                groups[type] = [a];
+            }
+        });
+
+        typeIds.forEach(t => {
+            if (ImGui.CollapsingHeader(`${t} (${groups[t].length} Actors)`, ImGui.TreeNodeFlags.None)) {
+                groups[t].forEach(a => {
+                    const isSelected = t4.compareGameObjects(a, this.viewingActor);
+                    const address = t4.getGameObjectId(a);
+                    ImGui.PushID(address);
+                    if (ImGui.Selectable(`${a.name || 'No Name'}`, isSelected)) {
+                        this.viewingActor = a;
+                    }
+                    ImGui.PopID();
+
+                    this.renderActorTooltip(a);
+                });
+            }
+        });
+    }
+
+    renderCameraList(cameras: t4.CCamera[]) {
+        cameras.forEach((camera, idx) => {
+            t4.refreshGameObject(camera);
+            if (ImGui.CollapsingHeader(`Camera ${idx + 1}, '${camera.name}'`, ImGui.TreeNodeFlags.None)) {
+                const pos = camera.position;
+                ImGui.Text('Position');
+                ImGui.DragFloat('x###posx', pos.x, x => camera.setPosition({ x, y: pos.y, z: pos.z }));
+                ImGui.DragFloat('y###posy', pos.y, y => camera.setPosition({ x: pos.x, y, z: pos.z }));
+                ImGui.DragFloat('z###posz', pos.z, z => camera.setPosition({ x: pos.x, y: pos.y, z }));
+
+                const rot = camera.rotationEuler;
+                ImGui.Text('Rotation');
+                ImGui.DragFloat('x###rotx', rot.x, x => camera.setRotation({ x, y: rot.y, z: rot.z }));
+                ImGui.DragFloat('y###roty', rot.y, y => camera.setRotation({ x: rot.x, y, z: rot.z }));
+                ImGui.DragFloat('z###rotz', rot.z, z => camera.setRotation({ x: rot.x, y: rot.y, z }));
+
+                const scale = camera.scale;
+                ImGui.Text('Scale');
+                ImGui.DragFloat('x###scalex', scale.x, x => camera.setScale({ x, y: scale.y, z: scale.z }));
+                ImGui.DragFloat('y###scaley', scale.y, y => camera.setScale({ x: scale.x, y, z: scale.z }));
+                ImGui.DragFloat('z###scalez', scale.z, z => camera.setScale({ x: scale.x, y: scale.y, z }));
+    
+                const visibility = camera.isVisible;
+                if (ImGui.Checkbox('Visible', visibility)) camera.setVisibility(!visibility);
+                if (ImGui.Checkbox('Enabled', camera.isEnabled)) camera.isEnabled = !camera.isEnabled;
+    
+                const typeInfo = camera.typeInfo;
+                if (typeInfo) {
+                    if (ImGui.CollapsingHeader('Type Info', ImGui.TreeNodeFlags.None)) {
+                        ImGui.Text(`ATR: '${typeInfo.actorPath}'`);
+                        ImGui.Text(`Geom: '${typeInfo.geomPath}'`);
+                        ImGui.Text(`Type: '${typeInfo.typeName}'`)
+                        ImGui.Text(`Total alive of this type: '${typeInfo.activeCount}'`);
+                    }
+                }
+
+                ImGui.DragFloat('field13_0x240', camera.field13_0x240, nv => camera.field13_0x240 = nv);
+                ImGui.DragFloat('field14_0x244', camera.field14_0x244, nv => camera.field14_0x244 = nv);
+                ImGui.DragFloat('field19_0x24c', camera.field19_0x24c, nv => camera.field19_0x24c = nv);
+                ImGui.DragFloat('field36_0x260', camera.field36_0x260, nv => camera.field36_0x260 = nv);
+                ImGui.DragFloat('field53_0x274', camera.field53_0x274, nv => camera.field53_0x274 = nv);
+                ImGui.DragFloat('field70_0x288', camera.field70_0x288, nv => camera.field70_0x288 = nv);
+                ImGui.DragFloat('field155_0x2e0', camera.field155_0x2e0, nv => camera.field155_0x2e0 = nv);
+                ImGui.DragFloat('field184_0x300', camera.field184_0x300, nv => camera.field184_0x300 = nv);
+                ImGui.DragFloat('field185_0x304', camera.field185_0x304, nv => camera.field185_0x304 = nv);
+                ImGui.DragFloat('field186_0x308', camera.field186_0x308, nv => camera.field186_0x308 = nv);
+                ImGui.DragFloat('field203_0x31c', camera.field203_0x31c, nv => camera.field203_0x31c = nv);
+                ImGui.DragFloat('field204_0x320', camera.field204_0x320, nv => camera.field204_0x320 = nv);
+                ImGui.DragFloat('field205_0x324', camera.field205_0x324, nv => camera.field205_0x324 = nv);
+                ImGui.DragFloat('field206_0x328', camera.field206_0x328, nv => camera.field206_0x328 = nv);
+                ImGui.DragFloat('field399_0x3ec', camera.field399_0x3ec, nv => camera.field399_0x3ec = nv);
+            }
+        });
+    }
+
     renderActors() {
         if (!this.showActors) return;
         
         if (ImGui.Begin('Actors', ImGui.WindowFlags.None)) {
-            const groups : { [k: string]: t4.CActor[] } = {};
-            const typeIds : string[] = [];
-            this.actors.forEach(a => {
-                const type = a.typeInfo?.typeName || 'No Type';
-                if (type in groups) groups[type].push(a);
-                else {
-                    typeIds.push(type);
-                    groups[type] = [a];
-                }
-            });
-
-            typeIds.forEach(t => {
-                if (ImGui.CollapsingHeader(`${t} (${groups[t].length} Actors)`, ImGui.TreeNodeFlags.None)) {
-                    groups[t].forEach(a => {
-                        const isSelected = t4.compareGameObjects(a, this.viewingActor);
-                        const address = t4.getGameObjectId(a);
-                        ImGui.PushID(address);
-                        if (ImGui.Selectable(`${a.name || 'No Name'}`, isSelected)) {
-                            this.viewingActor = a;
-                        }
-                        ImGui.PopID();
-
-                        if (ImGui.BeginItemTooltip()) {
-                            const pos = a.position;
-                            const id = `0x${address.toString(16)}`;
-                            const flags = a.actorFlags.toString(2);
-                            ImGui.Text(`ID: ${id}`);
-                            ImGui.Text(`Position: ${pos.x.toFixed(2)}, ${pos.y.toFixed(2)}, ${pos.z.toFixed(2)}`);
-                            ImGui.Text(`Flags: 0b${flags}`);
-                            ImGui.Text(`Collision Flags: 0b${a.collisionFlags.toString(2)}`);
-                            ImGui.Text(`Touches: 0b${a.touches.toString(2)}`);
-                            ImGui.Text(`Unknown Flag: 0b${a.unknownFlag.toString(2)}`)
-                            ImGui.Text(`Mode: ${a.mode} (0b${a.mode.toString(2)})`);
-                            ImGui.Text(`Nudge: ${a.nudge} (0b${a.nudge.toString(2)}`);
-                            ImGui.Text(`Visibility: ${a.isVisible() ? 'Visible' : 'Invisible'}`)
-                            ImGui.EndTooltip();
-                        }
-                    });
-                }
-            });
+            this.renderActorList(this.actors);
         }
         ImGui.End();
     }
@@ -212,7 +277,45 @@ class DebugMenu implements GlobalMod {
             } else {
                 levels.forEach(l => {
                     t4.refreshGameObject(l);
-                    ImGui.Text(`Level '${l.info.actorPath}'`);
+                    const lid = t4.getGameObjectId(l);
+
+                    let name = '';
+                    if (l.actorPath) {
+                        name = l.actorPath;
+                        let lastSlash = name.lastIndexOf('\\');
+                        if (lastSlash == -1) lastSlash = name.lastIndexOf('/');
+                        if (lastSlash >= 0) name = name.substring(lastSlash);
+                        name = `'${name}'`;
+                    } else {
+                        name = `0x${lid.toString(16)}`;
+                    }
+
+                    if (ImGui.CollapsingHeader(`Level ${name}`, ImGui.TreeNodeFlags.None)) {
+                        ImGui.Indent(16.0);
+                        ImGui.Text(`Is Dead: ${l.isDead ? 'Yes' : 'No'}`);
+                        ImGui.Text(`Active Camera: ${l.activeCamera ? `'${l.activeCamera.name}'` : 'None'}`);
+                        ImGui.Text(`Some Elapsed Time ${l.someTimeElapsed.toFixed(2)}`);
+                        ImGui.Text(`Some Time Remaining ${l.someTimeRemaining.toFixed(2)}`);
+                        ImGui.DragFloat('someTypeWarp0', l.someTimeWarp0, nv => l.someTimeWarp0 = nv);
+                        ImGui.DragFloat('someTypeWarp1', l.someTimeWarp1, nv => l.someTimeWarp1 = nv);
+                        if (l.info) ImGui.DragFloat(`Gravity###${lid}_grav`, l.info.gravity.y, y => l.info.gravity = { ...l.info.gravity, y });
+
+                        const actors = l.getActors();
+                        if (actors && ImGui.CollapsingHeader(`Actors (${actors.length})###${lid}_actors`, ImGui.TreeNodeFlags.None)) {
+                            this.renderActorList(actors);
+                        }
+                        
+                        const updateActors = l.getUpdateActors();
+                        if (updateActors && ImGui.CollapsingHeader(`Unknown Actor Array (${updateActors.length})###${lid}_uactors`, ImGui.TreeNodeFlags.None)) {
+                            this.renderActorList(updateActors);
+                        }
+
+                        const cameras = l.getCameras();
+                        if (cameras && ImGui.CollapsingHeader(`Cameras (${cameras.length})###${lid}_cameras`, ImGui.TreeNodeFlags.None)) {
+                            this.renderCameraList(cameras);
+                        }
+                        ImGui.Unindent(16.0);
+                    }
                 });
             }
         }
@@ -230,58 +333,7 @@ class DebugMenu implements GlobalMod {
                 if (cameras.length === 0) {
                     ImGui.Text('No Cameras');
                 } else {
-                    cameras.forEach((camera, idx) => {
-                        t4.refreshGameObject(camera);
-                        if (ImGui.CollapsingHeader(`Camera ${idx + 1}, '${camera.name}'`, ImGui.TreeNodeFlags.None)) {
-                            const pos = camera.position;
-                            ImGui.Text('Position');
-                            ImGui.DragFloat('x###posx', pos.x, x => camera.setPosition({ x, y: pos.y, z: pos.z }));
-                            ImGui.DragFloat('y###posy', pos.y, y => camera.setPosition({ x: pos.x, y, z: pos.z }));
-                            ImGui.DragFloat('z###posz', pos.z, z => camera.setPosition({ x: pos.x, y: pos.y, z }));
-
-                            const rot = camera.rotationEuler;
-                            ImGui.Text('Rotation');
-                            ImGui.DragFloat('x###rotx', rot.x, x => camera.setRotation({ x, y: rot.y, z: rot.z }));
-                            ImGui.DragFloat('y###roty', rot.y, y => camera.setRotation({ x: rot.x, y, z: rot.z }));
-                            ImGui.DragFloat('z###rotz', rot.z, z => camera.setRotation({ x: rot.x, y: rot.y, z }));
-
-                            const scale = camera.scale;
-                            ImGui.Text('Scale');
-                            ImGui.DragFloat('x###scalex', scale.x, x => camera.setScale({ x, y: scale.y, z: scale.z }));
-                            ImGui.DragFloat('y###scaley', scale.y, y => camera.setScale({ x: scale.x, y, z: scale.z }));
-                            ImGui.DragFloat('z###scalez', scale.z, z => camera.setScale({ x: scale.x, y: scale.y, z }));
-                
-                            const visibility = camera.isVisible();
-                            if (ImGui.Checkbox('Visible', visibility)) camera.setVisibility(!visibility);
-                            if (ImGui.Checkbox('Enabled', camera.isEnabled)) camera.isEnabled = !camera.isEnabled;
-                
-                            const typeInfo = camera.typeInfo;
-                            if (typeInfo) {
-                                if (ImGui.CollapsingHeader('Type Info', ImGui.TreeNodeFlags.None)) {
-                                    ImGui.Text(`ATR: '${typeInfo.actorPath}'`);
-                                    ImGui.Text(`Geom: '${typeInfo.geomPath}'`);
-                                    ImGui.Text(`Type: '${typeInfo.typeName}'`)
-                                    ImGui.Text(`Total alive of this type: '${typeInfo.activeCount}'`);
-                                }
-                            }
-
-                            ImGui.DragFloat('field13_0x240', camera.field13_0x240, nv => camera.field13_0x240 = nv);
-                            ImGui.DragFloat('field14_0x244', camera.field14_0x244, nv => camera.field14_0x244 = nv);
-                            ImGui.DragFloat('field19_0x24c', camera.field19_0x24c, nv => camera.field19_0x24c = nv);
-                            ImGui.DragFloat('field36_0x260', camera.field36_0x260, nv => camera.field36_0x260 = nv);
-                            ImGui.DragFloat('field53_0x274', camera.field53_0x274, nv => camera.field53_0x274 = nv);
-                            ImGui.DragFloat('field70_0x288', camera.field70_0x288, nv => camera.field70_0x288 = nv);
-                            ImGui.DragFloat('field155_0x2e0', camera.field155_0x2e0, nv => camera.field155_0x2e0 = nv);
-                            ImGui.DragFloat('field184_0x300', camera.field184_0x300, nv => camera.field184_0x300 = nv);
-                            ImGui.DragFloat('field185_0x304', camera.field185_0x304, nv => camera.field185_0x304 = nv);
-                            ImGui.DragFloat('field186_0x308', camera.field186_0x308, nv => camera.field186_0x308 = nv);
-                            ImGui.DragFloat('field203_0x31c', camera.field203_0x31c, nv => camera.field203_0x31c = nv);
-                            ImGui.DragFloat('field204_0x320', camera.field204_0x320, nv => camera.field204_0x320 = nv);
-                            ImGui.DragFloat('field205_0x324', camera.field205_0x324, nv => camera.field205_0x324 = nv);
-                            ImGui.DragFloat('field206_0x328', camera.field206_0x328, nv => camera.field206_0x328 = nv);
-                            ImGui.DragFloat('field399_0x3ec', camera.field399_0x3ec, nv => camera.field399_0x3ec = nv);
-                        }
-                    });
+                    this.renderCameraList(cameras);
                 }
             }
         }
@@ -312,7 +364,7 @@ class DebugMenu implements GlobalMod {
             ImGui.DragFloat('y###scaley', scale.y, y => actor.setScale({ x: scale.x, y, z: scale.z }));
             ImGui.DragFloat('z###scalez', scale.z, z => actor.setScale({ x: scale.x, y: scale.y, z }));
 
-            const visibility = actor.isVisible();
+            const visibility = actor.isVisible;
             if (ImGui.Checkbox('Visible', visibility)) actor.setVisibility(!visibility);
             if (ImGui.Checkbox('Enabled', actor.isEnabled)) actor.isEnabled = !actor.isEnabled;
 
@@ -330,24 +382,26 @@ class DebugMenu implements GlobalMod {
             if (physicsInfo) {
                 if (ImGui.CollapsingHeader('Physics Info', ImGui.TreeNodeFlags.None)) {
                     const velocity = physicsInfo.velocity;
-                    ImGui.Text(`mass: ${physicsInfo.mass}`);
-                    ImGui.Text(`field_0x4: ${physicsInfo.field_0x4}`);
-                    ImGui.Text(`gravity: ${physicsInfo.gravity}`);
-                    ImGui.Text(`field_0xC: ${physicsInfo.field_0xC}`);
-                    ImGui.Text(`field_0x10: ${physicsInfo.field_0x10}`);
-                    ImGui.Text(`field_0x14: ${physicsInfo.field_0x14}`);
-                    ImGui.Text(`Velocity: ${velocity.x}, ${velocity.y}, ${velocity.z}`);
-                    ImGui.Text(`field_0x24: ${physicsInfo.field_0x24}`);
-                    ImGui.Text(`field_0x28: ${physicsInfo.field_0x28}`);
-                    ImGui.Text(`field_0x2C: ${physicsInfo.field_0x2C}`);
-                    ImGui.Text(`field_0x30: ${physicsInfo.field_0x30}`);
-                    ImGui.Text(`field_0x34: ${physicsInfo.field_0x34}`);
-                    ImGui.Text(`field_0x38: ${physicsInfo.field_0x38}`);
+                    ImGui.DragFloat('mass', physicsInfo.mass, nv => physicsInfo.mass = nv);
+                    ImGui.DragFloat('field_0x4', physicsInfo.field_0x4, nv => physicsInfo.field_0x4 = nv);
+                    ImGui.DragFloat('gravity', physicsInfo.gravity, nv => physicsInfo.gravity = nv);
+                    ImGui.DragFloat('velocity.x', velocity.x, x => physicsInfo.velocity = { ...physicsInfo.velocity, x });
+                    ImGui.DragFloat('velocity.y', velocity.y, y => physicsInfo.velocity = { ...physicsInfo.velocity, y });
+                    ImGui.DragFloat('velocity.z', velocity.z, z => physicsInfo.velocity = { ...physicsInfo.velocity, z });
+                    ImGui.DragFloat('field_0xC', physicsInfo.field_0xC, nv => physicsInfo.field_0xC = nv);
+                    ImGui.DragFloat('field_0x10', physicsInfo.field_0x10, nv => physicsInfo.field_0x10 = nv);
+                    ImGui.DragFloat('field_0x14', physicsInfo.field_0x14, nv => physicsInfo.field_0x14 = nv);
+                    ImGui.DragFloat('field_0x24', physicsInfo.field_0x24, nv => physicsInfo.field_0x24 = nv);
+                    ImGui.DragFloat('field_0x28', physicsInfo.field_0x28, nv => physicsInfo.field_0x28 = nv);
+                    ImGui.DragFloat('field_0x2C', physicsInfo.field_0x2C, nv => physicsInfo.field_0x2C = nv);
+                    ImGui.DragFloat('field_0x30', physicsInfo.field_0x30, nv => physicsInfo.field_0x30 = nv);
+                    ImGui.DragFloat('field_0x34', physicsInfo.field_0x34, nv => physicsInfo.field_0x34 = nv);
+                    ImGui.DragFloat('field_0x38', physicsInfo.field_0x38, nv => physicsInfo.field_0x38 = nv);
                 }
             }
 
-            if (this.player && ImGui.Button('Teleport Near Player', new vec2f(0, 0))) {
-                const setToPos = vec3f.From(this.player.position);
+            if (this.player && ImGui.Button('Teleport Near Player', new vec2(0, 0))) {
+                const setToPos = vec3.From(this.player.position);
                 const forward = this.player.transform.z;
                 forward.x *= 3.0;
                 forward.y *= 3.0;
@@ -360,6 +414,22 @@ class DebugMenu implements GlobalMod {
                 setToPos.y += 0.5;
 
                 actor.setPosition(setToPos);
+            }
+
+            if (this.player && ImGui.Button('Teleport To Object', new vec2(0, 0))) {
+                const setToPos = vec3.From(actor.position);
+                const forward = this.player.transform.z;
+                forward.x *= 3.0;
+                forward.y *= 3.0;
+                forward.z *= 3.0;
+
+                // put it in front of the player
+                setToPos.add(forward);
+
+                // move it up a little bit to try to decrease the odds of it falling through the map
+                setToPos.y += 0.5;
+
+                this.player.setPosition(setToPos);
             }
         }
         ImGui.End();

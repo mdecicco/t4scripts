@@ -1,17 +1,4 @@
 import './mod_mgr';
-import * as m from '../utils/math';
-
-global.vec2f = m.vec2f;
-global.vec3f = m.vec3f;
-global.vec4f = m.vec4f;
-// i32 === f32 in JS so... Might as well
-global.vec2i = m.vec2f;
-global.vec3i = m.vec3f;
-global.vec4i = m.vec4f;
-
-global.quatf = m.quatf;
-global.mat3f = m.mat3f;
-global.mat4f = m.mat4f;
 
 t4.compareGameObjects = function <T extends {}>(a: T | null, b: T | null) {
     if (!a || !b) return false;

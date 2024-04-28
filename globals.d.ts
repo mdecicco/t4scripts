@@ -222,127 +222,127 @@ declare namespace fs {
      */
     class Buffer {
         /**
-         * @address 0x56811ACD
+         * @address 0x56801AFA
          */
         readUInt8(): u8;
         /**
-         * @address 0x56814EC1
+         * @address 0x56804FAC
          */
         writeUInt8(value: u8): u8;
         /**
-         * @address 0x56815015
+         * @address 0x56805100
          */
         readUInt16(): u16;
         /**
-         * @address 0x56813AD0
+         * @address 0x56803B75
          */
         writeUInt16(value: u16): u16;
         /**
-         * @address 0x5681268F
+         * @address 0x568026D5
          */
         readUInt32(): u32;
         /**
-         * @address 0x56817D47
+         * @address 0x56807E91
          */
         writeUInt32(value: u32): u32;
         /**
-         * @address 0x56813B93
+         * @address 0x56803C38
          */
         readUInt64(): u64;
         /**
-         * @address 0x56811C3F
+         * @address 0x56801C71
          */
         writeUInt64(value: u64): u64;
         /**
-         * @address 0x56818CD8
+         * @address 0x56808E36
          */
         readInt8(): i8;
         /**
-         * @address 0x56814ACA
+         * @address 0x56804BB0
          */
         writeInt8(value: i8): i8;
         /**
-         * @address 0x568165A0
+         * @address 0x568066BD
          */
         readInt16(): i16;
         /**
-         * @address 0x568122F2
+         * @address 0x56802338
          */
         writeInt16(value: i16): i16;
         /**
-         * @address 0x56812DF6
+         * @address 0x56802E6E
          */
         readInt32(): i32;
         /**
-         * @address 0x5681707C
+         * @address 0x568071AD
          */
         writeInt32(value: i32): i32;
         /**
-         * @address 0x56819287
+         * @address 0x568093EF
          */
         readInt64(): i64;
         /**
-         * @address 0x5681833C
+         * @address 0x56808486
          */
         writeInt64(value: i64): i64;
         /**
-         * @address 0x568186F2
+         * @address 0x56808846
          */
         readFloat32(): f32;
         /**
-         * @address 0x56815574
+         * @address 0x5680566E
          */
         writeFloat32(value: f32): f32;
         /**
-         * @address 0x56819241
+         * @address 0x568093A9
          */
         readFloat64(): f64;
         /**
-         * @address 0x56817063
+         * @address 0x56807194
          */
         writeFloat64(value: f64): f64;
         /**
-         * @address 0x568116BD
+         * @address 0x568016D6
          */
         getPosition(): u64;
         /**
-         * @address 0x568151FA
+         * @address 0x568052EF
          */
         getSize(): u64;
         /**
-         * @address 0x56817AE0
+         * @address 0x56807C25
          */
         getCapacity(): u64;
         /**
-         * @address 0x56814151
+         * @address 0x5680420F
          */
         getRemaining(): u64;
         /**
-         * @address 0x56813409
+         * @address 0x568034A4
          */
         isAtEnd(): boolean;
         /**
-         * @address 0x56813E40
+         * @address 0x56803EF9
          */
         seek(offsetFromStart: u64): void;
         /**
-         * @address 0x56817284
+         * @address 0x568073B5
          */
         subBuffer(size: u64): Buffer;
         /**
-         * @address 0x56811DA7
+         * @address 0x56801DD9
          */
         readNullTerminatedString(): string;
         /**
-         * @address 0x56811532
+         * @address 0x5680154B
          */
         readString(length: u32): string;
         /**
-         * @address 0x56817C2F
+         * @address 0x56807D79
          */
         writeString(str: string): boolean;
         /**
-         * @address 0x56811D2F
+         * @address 0x56801D61
          */
         saveToFile(path: string): boolean;
     }
@@ -416,35 +416,35 @@ declare namespace fs {
     }
     
     /**
-     * @address 0x569D8CF0
+     * @address 0x569CBF00
      */
     function bufferFromFile(filePath: string, param_2: OpenMode): Buffer | null;
     /**
-     * @address 0x569D8DC0
+     * @address 0x569CBFD0
      */
     function createBuffer(capacity: u32): Buffer;
     /**
-     * @address 0x569D8E40
+     * @address 0x569CC050
      */
     function destroyBuffer(buffer: Buffer): void;
     /**
-     * @address 0x56818729
+     * @address 0x5680887D
      */
     function listDirectoryEntries(dirPath: string): DirectoryEntry[] | null;
     /**
-     * @address 0x569D9110
+     * @address 0x569CC320
      */
     function stat(path: string): FileStatus | null;
     /**
-     * @address 0x569D9460
+     * @address 0x569CC670
      */
     function relativePath(inputPath: string, relativeTo: string): string | null;
     /**
-     * @address 0x569D95F0
+     * @address 0x569CC800
      */
     function createDirectory(path: string): boolean;
     /**
-     * @address 0x569D9780
+     * @address 0x569CC990
      */
     function exists(path: string): boolean;
 }
@@ -459,75 +459,75 @@ declare namespace t4 {
          */
         levelPath: string | null;
         /**
-         * @address 0x56816F00
+         * @address 0x56807031
          */
         getCurrentLevel(): CLevel;
         /**
-         * @address 0x56812DEC
+         * @address 0x56802E64
          */
         getLevels(): CLevel[];
         /**
-         * @address 0x5681272F
+         * @address 0x56802775
          */
         addUpdateListener(param_1: () => void): u32;
         /**
-         * @address 0x568189CC
+         * @address 0x56808B25
          */
         removeUpdateListener(param_1: u32): void;
         /**
-         * @address 0x568159D9
+         * @address 0x56805ADD
          */
         addRenderListener(param_1: () => void): u32;
         /**
-         * @address 0x56815173
+         * @address 0x56805268
          */
         removeRenderListener(param_1: u32): void;
         /**
-         * @address 0x5681425A
+         * @address 0x5680431D
          */
         addActorCreateListener(param_1: (param_0: CActor) => void): u32;
         /**
-         * @address 0x56818B07
+         * @address 0x56808C60
          */
         removeActorCreateListener(param_1: u32): void;
         /**
-         * @address 0x56816EFB
+         * @address 0x5680702C
          */
         addActorDestroyListener(param_1: (param_0: CActor) => void): u32;
         /**
-         * @address 0x56817554
+         * @address 0x5680768F
          */
         removeActorDestroyListener(param_1: u32): void;
         /**
-         * @address 0x56818265
+         * @address 0x568083AF
          */
         addLevelCreateListener(param_1: (param_0: CLevel) => void): u32;
         /**
-         * @address 0x56816082
+         * @address 0x568061A4
          */
         removeLevelCreateListener(param_1: u32): void;
         /**
-         * @address 0x56811767
+         * @address 0x56801780
          */
         addLevelDestroyListener(param_1: (param_0: CLevel) => void): u32;
         /**
-         * @address 0x56813C6A
+         * @address 0x56803D0F
          */
         removeLevelDestroyListener(param_1: u32): void;
         /**
-         * @address 0x56817676
+         * @address 0x568077B1
          */
         addLevelSpawnListener(param_1: (param_0: CLevel) => void): u32;
         /**
-         * @address 0x56811D52
+         * @address 0x56801D84
          */
         removeLevelSpawnListener(param_1: u32): void;
         /**
-         * @address 0x56812630
+         * @address 0x56802676
          */
         disableInput(): void;
         /**
-         * @address 0x56813E3B
+         * @address 0x56803EF4
          */
         enableInput(): void;
     }
@@ -537,30 +537,80 @@ declare namespace t4 {
      */
     class CLevel {
         /**
+         * @offset 0x20 (32 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        readonly actorPath: string | null;
+        
+        /**
+         * @offset 0x4 (4 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        someTimeRemaining: f32;
+        
+        /**
+         * @offset 0x8 (8 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        someTimeWarp0: f32;
+        
+        /**
+         * @offset 0xC (12 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        someTimeWarp1: f32;
+        
+        /**
          * @offset 0x24 (36 bytes)
          * @size 0x74 (116 bytes)
          */
         readonly info: UnkLevelInfo;
         
         /**
+         * @offset 0x110 (272 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        activeCamera: CCamera | null;
+        
+        /**
+         * @offset 0x128 (296 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        someTimeElapsed: f32;
+        
+        /**
          * @offset 0x130 (304 bytes)
          * @size 0x4 (4 bytes)
          */
         readonly levelActor: CActor | null;
+        
         /**
-         * @address 0x56818981
+         * @offset 0x2E8 (744 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        readonly isDead: u32;
+        /**
+         * @address 0x56808ADA
          */
         spawnActor(param_1: i32, param_2: string, param_3: string, param_4: basic_vec3f, param_5: i32): CActor;
         /**
-         * @address 0x56818521
+         * @address 0x56808670
          */
-        getCameras(): CCamera[];
+        getCameras(): CCamera[] | null;
         /**
-         * @address 0x5681388C
+         * @address 0x5680978C
+         */
+        getUpdateActors(): CActor[] | null;
+        /**
+         * @address 0x568097E1
+         */
+        getActors(): CActor[] | null;
+        /**
+         * @address 0x5680392C
          */
         addActorAddedListener(listener: (param_0: CActor) => void): u32;
         /**
-         * @address 0x5681801C
+         * @address 0x56808161
          */
         removeActorAddedListener(listenerId: u32): void;
     }
@@ -574,6 +624,12 @@ declare namespace t4 {
          * @size 0x1 (1 bytes)
          */
         isEnabled: boolean;
+        
+        /**
+         * @offset 0x56 (86 bytes)
+         * @size 0x1 (1 bytes)
+         */
+        readonly isVisible: boolean;
         
         /**
          * @offset 0x23 (35 bytes)
@@ -639,7 +695,25 @@ declare namespace t4 {
          * @offset 0xDC (220 bytes)
          * @size 0x4 (4 bytes)
          */
-        unknownFlag: u32;
+        usingQuatRotation: u32;
+        
+        /**
+         * @offset 0xAC (172 bytes)
+         * @size 0xC (12 bytes)
+         */
+        prevPosition: basic_vec3f;
+        
+        /**
+         * @offset 0xB8 (184 bytes)
+         * @size 0xC (12 bytes)
+         */
+        prevVelocity: basic_vec3f;
+        
+        /**
+         * @offset 0x104 (260 bytes)
+         * @size 0xC (12 bytes)
+         */
+        deltaPos: basic_vec3f;
         
         /**
          * @offset 0xE0 (224 bytes)
@@ -700,42 +774,62 @@ declare namespace t4 {
          * @size 0x4 (4 bytes)
          */
         inputRelated: u32;
+        
         /**
-         * @address 0x568112EE
+         * @offset 0x64 (100 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        readonly parent: CActor | null;
+        
+        /**
+         * @offset 0x74 (116 bytes)
+         * @size 0x4 (4 bytes)
+         */
+        readonly childCount: u32;
+        /**
+         * @address 0x568012FD
          */
         getNextActor(): CActor;
         /**
-         * @address 0x568182BF
+         * @address 0x56808409
          */
         getPrevActor(): CActor;
         /**
-         * @address 0x56814A57
+         * @address 0x568097B9
+         */
+        getChildren(): CActor[];
+        /**
+         * @address 0x56804B38
          */
         setPosition(position: basic_vec3f): void;
         /**
-         * @address 0x5681553D
+         * @address 0x56805637
          */
         setRotation(fromEulerAngles: basic_vec3f): void;
         /**
-         * @address 0x568171CB
+         * @address 0x568072FC
          */
         setScale(scale: basic_vec3f): void;
         /**
-         * @address 0x56816E88
+         * @address 0x56806FB9
          */
         setVisibility(isVisible: boolean): void;
         /**
-         * @address 0x56817E0A
-         */
-        isVisible(): boolean;
-        /**
-         * @address 0x56811366
+         * @address 0x56801375
          */
         addCollisionListener(whenCollidingWith: CActor | null, callback: (param_0: CActor, param_1: CActor) => void): u32;
         /**
-         * @address 0x56815F3D
+         * @address 0x5680605F
          */
         removeCollisionListener(listenerId: u32): void;
+        /**
+         * @address 0x5680948F
+         */
+        addUpdateListener(callback: (param_0: f32) => void): u32;
+        /**
+         * @address 0x56809494
+         */
+        removeUpdateListener(listenerId: u32): void;
     }
     
     /**
@@ -877,7 +971,7 @@ declare namespace t4 {
          * @offset 0x18 (24 bytes)
          * @size 0xC (12 bytes)
          */
-        readonly velocity: basic_vec3f;
+        velocity: basic_vec3f;
         
         /**
          * @offset 0x24 (36 bytes)
@@ -956,10 +1050,10 @@ declare namespace t4 {
         readonly actorPath: string | null;
         
         /**
-         * @offset 0x4 (4 bytes)
-         * @size 0x4 (4 bytes)
+         * @offset 0x0 (0 bytes)
+         * @size 0xC (12 bytes)
          */
-        gravity: f32;
+        gravity: basic_vec3f;
     }
     
     enum LogLevel {
@@ -1138,39 +1232,39 @@ declare namespace t4 {
     }
     
     /**
-     * @address 0x56813A5D
+     * @address 0x56803AFD
      */
     function getEngine(): CGame | null;
     /**
-     * @address 0x56811244
+     * @address 0x5680124E
      */
     function sleep(milliseconds: u32): void;
     /**
-     * @address 0x56A07110
+     * @address 0x569FB390
      */
     function addEngineCreateListener(listener: (param_0: CGame) => void): u32;
     /**
-     * @address 0x56A07180
+     * @address 0x569FB400
      */
     function removeEngineCreateListener(listenerId: u32): void;
     /**
-     * @address 0x56A071E0
+     * @address 0x569FB460
      */
     function getLiveActors(): CActor[];
     /**
-     * @address 0x569CC590
+     * @address 0x569BF880
      */
     function addLogListener(listener: (param_0: LogEvent) => void): u32;
     /**
-     * @address 0x569CC600
+     * @address 0x569BF8F0
      */
     function removeLogListener(listenerId: u32): void;
     /**
-     * @address 0x569BDA60
+     * @address 0x569B0D00
      */
     function addKeyboardListener(listener: (param_0: KeyboardEvent) => void): u32;
     /**
-     * @address 0x569BDAD0
+     * @address 0x569B0D70
      */
     function removeKeyboardListener(listenerId: u32): void;
 }
@@ -1902,71 +1996,71 @@ declare namespace ImGui {
      */
     class ImDrawList {
         /**
-         * @address 0x5681800D
+         * @address 0x56808152
          */
         AddLine(p1: ImVec2, p2: ImVec2, color: u32, thickness: f32): void;
         /**
-         * @address 0x568123E2
+         * @address 0x56802428
          */
         AddRect(min: ImVec2, max: ImVec2, color: u32, rounding: f32, flags: i32, thickness: f32): void;
         /**
-         * @address 0x568143AE
+         * @address 0x56804471
          */
         AddRectFilled(min: ImVec2, max: ImVec2, color: u32, rounding: f32, flags: i32): void;
         /**
-         * @address 0x568181E8
+         * @address 0x56808332
          */
         AddRectFilledMultiColor(min: ImVec2, max: ImVec2, colorUpperLeft: u32, colorUpperRight: u32, colorBottomRight: u32, colorBottomLeft: u32): void;
         /**
-         * @address 0x56816B63
+         * @address 0x56806C8F
          */
         AddQuad(p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, color: u32, thickness: f32): void;
         /**
-         * @address 0x568154BB
+         * @address 0x568055B5
          */
         AddQuadFilled(p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, color: u32): void;
         /**
-         * @address 0x56813747
+         * @address 0x568037E7
          */
         AddTriangle(p1: ImVec2, p2: ImVec2, p3: ImVec2, color: u32, thickness: f32): void;
         /**
-         * @address 0x56818E8B
+         * @address 0x56808FEE
          */
         AddTriangleFilled(p1: ImVec2, p2: ImVec2, p3: ImVec2, color: u32): void;
         /**
-         * @address 0x568119C9
+         * @address 0x568019EC
          */
         AddCircle(center: ImVec2, radius: f32, color: u32, numSegments: i32, thickness: f32): void;
         /**
-         * @address 0x5681663B
+         * @address 0x56806758
          */
         AddCircleFilled(center: ImVec2, radius: f32, color: u32, numSegments: i32): void;
         /**
-         * @address 0x56818A6C
+         * @address 0x56808BC5
          */
         AddNgon(center: ImVec2, radius: f32, color: u32, numSegments: i32, thickness: f32): void;
         /**
-         * @address 0x568173A1
+         * @address 0x568074D7
          */
         AddNgonFilled(center: ImVec2, radius: f32, color: u32, numSegments: i32): void;
         /**
-         * @address 0x56818B8E
+         * @address 0x56808CE7
          */
         AddEllipse(center: ImVec2, radius: ImVec2, color: u32, rotation: f32, numSegments: i32, thickness: f32): void;
         /**
-         * @address 0x56818AF8
+         * @address 0x56808C51
          */
         AddEllipseFilled(center: ImVec2, radius: ImVec2, color: u32, rotation: f32, numSegments: i32): void;
         /**
-         * @address 0x56A1F3E0
+         * @address 0x56A13660
          */
         AddText(position: ImVec2, color: u32, text: string): void;
         /**
-         * @address 0x56816933
+         * @address 0x56806A55
          */
         AddBezierCubic(p1: ImVec2, p2: ImVec2, p3: ImVec2, p4: ImVec2, color: u32, thickness: f32, numSegments: i32): void;
         /**
-         * @address 0x56816343
+         * @address 0x5680646A
          */
         AddBezierQuadratic(p1: ImVec2, p2: ImVec2, p3: ImVec2, color: u32, thickness: f32, numSegments: i32): void;
     }
@@ -2174,861 +2268,861 @@ declare namespace ImGui {
     }
     
     /**
-     * @address 0x568145DE
+     * @address 0x568046B5
      */
     function GetCurrentContext(): ImGuiContext | null;
     /**
-     * @address 0x5681844F
+     * @address 0x5680859E
      */
     function SetCurrentContext(ctx: ImGuiContext): void;
     /**
-     * @address 0x5681240F
+     * @address 0x56802455
      */
     function GetIO(): ImGuiIO | null;
     /**
-     * @address 0x56817860
+     * @address 0x568079A5
      */
     function GetStyle(): ImGuiStyle | null;
     /**
-     * @address 0x56A1C020
+     * @address 0x56A102A0
      */
     function ShowDemoWindow(isOpen: boolean): boolean;
     /**
-     * @address 0x56A1C080
+     * @address 0x56A10300
      */
     function ShowMetricsWindow(isOpen: boolean): boolean;
     /**
-     * @address 0x56A1C0E0
+     * @address 0x56A10360
      */
     function ShowDebugLogWindow(isOpen: boolean): boolean;
     /**
-     * @address 0x56A1C140
+     * @address 0x56A103C0
      */
     function ShowIDStackToolWindow(isOpen: boolean): boolean;
     /**
-     * @address 0x56A1C1A0
+     * @address 0x56A10420
      */
     function ShowAboutWindow(isOpen: boolean): boolean;
     /**
-     * @address 0x56818AC6
+     * @address 0x56808C1F
      */
     function ShowStyleEditor(targetStyle: ImGuiStyle): void;
     /**
-     * @address 0x5681251D
+     * @address 0x56802563
      */
     function ShowStyleSelector(label: string): boolean;
     /**
-     * @address 0x56818C51
+     * @address 0x56808DAA
      */
     function ShowFontSelector(label: string): void;
     /**
-     * @address 0x56816F0A
+     * @address 0x5680703B
      */
     function ShowUserGuide(): void;
     /**
-     * @address 0x5681708B
+     * @address 0x568071BC
      */
     function GetVersion(): string | null;
     /**
-     * @address 0x5681223E
+     * @address 0x56802284
      */
     function StyleColorsDark(targetStyle: ImGuiStyle): void;
     /**
-     * @address 0x5681759F
+     * @address 0x568076DA
      */
     function StyleColorsLight(targetStyle: ImGuiStyle): void;
     /**
-     * @address 0x56816B2C
+     * @address 0x56806C58
      */
     function StyleColorsClassic(targetStyle: ImGuiStyle): void;
     /**
-     * @address 0x56A1C200
+     * @address 0x56A10480
      */
     function Begin(title: string, flags: WindowFlags): boolean;
     /**
-     * @address 0x56814458
+     * @address 0x5680452A
      */
     function End(): void;
     /**
-     * @address 0x56A1C270
+     * @address 0x56A104F0
      */
     function BeginChild(id: u32, size: ImVec2, childFlags: ChildFlags, windowFlags: WindowFlags): boolean;
     /**
-     * @address 0x56817487
+     * @address 0x568075C2
      */
     function EndChild(): void;
     /**
-     * @address 0x56815123
+     * @address 0x56805218
      */
     function IsWindowAppearing(): boolean;
     /**
-     * @address 0x56816F87
+     * @address 0x568070B8
      */
     function IsWindowCollapsed(): boolean;
     /**
-     * @address 0x56A1C2E0
+     * @address 0x56A10560
      */
     function IsWindowFocused(flags: FocusedFlags): boolean;
     /**
-     * @address 0x568160EB
+     * @address 0x5680620D
      */
     function IsWindowHovered(param_1: i32): boolean;
     /**
-     * @address 0x5681737E
+     * @address 0x568074B4
      */
     function GetWindowDrawList(): ImDrawList | null;
     /**
-     * @address 0x568119B0
+     * @address 0x568019D3
      */
     function GetWindowPos(): ImVec2;
     /**
-     * @address 0x56816AAF
+     * @address 0x56806BD6
      */
     function GetWindowSize(): ImVec2;
     /**
-     * @address 0x56815669
+     * @address 0x56805768
      */
     function GetWindowWidth(): f32;
     /**
-     * @address 0x568123F6
+     * @address 0x5680243C
      */
     function GetWindowHeight(): f32;
     /**
-     * @address 0x56A1C370
+     * @address 0x56A105F0
      */
     function SetNextWindowPos(pos: ImVec2): void;
     /**
-     * @address 0x56A1C3D0
+     * @address 0x56A10650
      */
     function SetNextWindowSize(size: ImVec2): void;
     /**
-     * @address 0x56A1C440
+     * @address 0x56A106C0
      */
     function SetNextWindowSizeConstraints(minSize: ImVec2, maxSize: ImVec2): void;
     /**
-     * @address 0x568178E2
+     * @address 0x56807A27
      */
     function SetNextWindowContentSize(size: ImVec2): void;
     /**
-     * @address 0x56A1C4A0
+     * @address 0x56A10720
      */
     function SetNextWindowCollapsed(isCollapsed: boolean): void;
     /**
-     * @address 0x568144AD
+     * @address 0x5680457F
      */
     function SetNextWindowFocus(): void;
     /**
-     * @address 0x5681551A
+     * @address 0x56805614
      */
     function SetNextWindowScroll(scrollValue: ImVec2): void;
     /**
-     * @address 0x56811181
+     * @address 0x5680118B
      */
     function SetNextWindowBgAlpha(alpha: f32): void;
     /**
-     * @address 0x56A1C500
+     * @address 0x56A10780
      */
     function SetWindowPos(position: ImVec2): void;
     /**
-     * @address 0x56A1C560
+     * @address 0x56A107E0
      */
     function SetWindowSize(size: ImVec2): void;
     /**
-     * @address 0x56A1C5C0
+     * @address 0x56A10840
      */
     function SetWindowCollapsed(isCollapsed: boolean): void;
     /**
-     * @address 0x56A1C620
+     * @address 0x56A108A0
      */
     function SetWindowFocus(): void;
     /**
-     * @address 0x568137C9
+     * @address 0x56803869
      */
     function SetWindowFontScale(fontScale: f32): void;
     /**
-     * @address 0x568155BA
+     * @address 0x568056B4
      */
     function GetContentRegionAvail(): ImVec2;
     /**
-     * @address 0x56815B41
+     * @address 0x56805C45
      */
     function GetContentRegionMax(): ImVec2;
     /**
-     * @address 0x56815484
+     * @address 0x5680557E
      */
     function GetWindowContentRegionMin(): ImVec2;
     /**
-     * @address 0x5681225C
+     * @address 0x568022A2
      */
     function GetWindowContentRegionMax(): ImVec2;
     /**
-     * @address 0x56811CDF
+     * @address 0x56801D11
      */
     function GetScrollX(): f32;
     /**
-     * @address 0x56815A1A
+     * @address 0x56805B1E
      */
     function GetScrollY(): f32;
     /**
-     * @address 0x56814C91
+     * @address 0x56804D7C
      */
     function SetScrollX(scrollX: f32): void;
     /**
-     * @address 0x56811EB0
+     * @address 0x56801EEC
      */
     function SetScrollY(scrollY: f32): void;
     /**
-     * @address 0x568183A0
+     * @address 0x568084EA
      */
     function GetScrollMaxX(): f32;
     /**
-     * @address 0x568164B5
+     * @address 0x568065D7
      */
     function GetScrollMaxY(): f32;
     /**
-     * @address 0x568110D2
+     * @address 0x568010DC
      */
     function SetScrollHereX(centerRatioX: f32): void;
     /**
-     * @address 0x56811843
+     * @address 0x56801861
      */
     function SetScrollHereY(centerRatioY: f32): void;
     /**
-     * @address 0x56814647
+     * @address 0x5680471E
      */
     function SetScrollFromPosX(localX: f32, centerRatioX: f32): void;
     /**
-     * @address 0x56813387
+     * @address 0x56803418
      */
     function SetScrollFromPosY(localY: f32, centerRatioY: f32): void;
     /**
-     * @address 0x56812905
+     * @address 0x56802950
      */
     function PushFont(font: ImFont): void;
     /**
-     * @address 0x56811299
+     * @address 0x568012A8
      */
     function PopFont(): void;
     /**
-     * @address 0x56A1C680
+     * @address 0x56A10900
      */
     function PushStyleColor(index: Color, color: ImVec4): void;
     /**
-     * @address 0x56A1C6E0
+     * @address 0x56A10960
      */
     function PopStyleColor(): void;
     /**
-     * @address 0x56A1C750
+     * @address 0x56A109D0
      */
     function PushStyleVarF32(index: StyleVar, value: f32): void;
     /**
-     * @address 0x56A1C7B0
+     * @address 0x56A10A30
      */
     function PushStyleVarVec2(index: StyleVar, value: ImVec2): void;
     /**
-     * @address 0x56A1C810
+     * @address 0x56A10A90
      */
     function PopStyleVar(): void;
     /**
-     * @address 0x56815097
+     * @address 0x56805182
      */
     function PushTabStop(tabStop: boolean): void;
     /**
-     * @address 0x56816F6E
+     * @address 0x5680709F
      */
     function PopTabStop(): void;
     /**
-     * @address 0x56813CCE
+     * @address 0x56803D73
      */
     function PushButtonRepeat(repeat: boolean): void;
     /**
-     * @address 0x56815AD3
+     * @address 0x56805BD7
      */
     function PopButtonRepeat(): void;
     /**
-     * @address 0x56817DE7
+     * @address 0x56807F31
      */
     function PushItemWidth(itemWidth: f32): void;
     /**
-     * @address 0x5681641A
+     * @address 0x5680653C
      */
     function PopItemWidth(): void;
     /**
-     * @address 0x56817EF0
+     * @address 0x5680803A
      */
     function SetNextItemWidth(itemWidth: f32): void;
     /**
-     * @address 0x56812FE0
+     * @address 0x5680305D
      */
     function CalcItemWidth(): f32;
     /**
-     * @address 0x56814C6E
+     * @address 0x56804D59
      */
     function PushTextWrapPos(wrapLocalPosX: f32): void;
     /**
-     * @address 0x568159F2
+     * @address 0x56805AF6
      */
     function PopTextWrapPos(): void;
     /**
-     * @address 0x568151F0
+     * @address 0x568052E5
      */
     function GetFont(): ImFont | null;
     /**
-     * @address 0x5681783D
+     * @address 0x56807982
      */
     function GetFontSize(): f32;
     /**
-     * @address 0x568161A9
+     * @address 0x568062CB
      */
     function GetFontTexUvWhitePixel(): ImVec2;
     /**
-     * @address 0x56A1C890
+     * @address 0x56A10B10
      */
     function GetStyleColorVec4(index: Color): ImVec4;
     /**
-     * @address 0x56811D84
+     * @address 0x56801DB6
      */
     function GetCursorScreenPos(): ImVec2;
     /**
-     * @address 0x568166C7
+     * @address 0x568067E4
      */
     function SetCursorScreenPos(position: ImVec2): void;
     /**
-     * @address 0x5681911A
+     * @address 0x56809282
      */
     function GetCursorPos(): ImVec2;
     /**
-     * @address 0x568116EF
+     * @address 0x56801708
      */
     function GetCursorPosX(): f32;
     /**
-     * @address 0x5681689D
+     * @address 0x568069BA
      */
     function GetCursorPosY(): f32;
     /**
-     * @address 0x56816AC3
+     * @address 0x56806BEA
      */
     function SetCursorPos(localPosition: ImVec2): void;
     /**
-     * @address 0x56811F55
+     * @address 0x56801F91
      */
     function SetCursorPosX(localX: f32): void;
     /**
-     * @address 0x56817C89
+     * @address 0x56807DD3
      */
     function SetCursorPosY(localY: f32): void;
     /**
-     * @address 0x568178B5
+     * @address 0x568079FA
      */
     function GetCursorStartPos(): ImVec2;
     /**
-     * @address 0x568183F0
+     * @address 0x5680853F
      */
     function Separator(): void;
     /**
-     * @address 0x56A1C900
+     * @address 0x56A10B80
      */
     function SameLine(offsetX: f32, spacingX: f32): void;
     /**
-     * @address 0x568141C9
+     * @address 0x5680428C
      */
     function NewLine(): void;
     /**
-     * @address 0x568164C9
+     * @address 0x568065EB
      */
     function Spacing(): void;
     /**
-     * @address 0x568152E0
+     * @address 0x568053DA
      */
     function Dummy(size: ImVec2): void;
     /**
-     * @address 0x56816393
+     * @address 0x568064B5
      */
     function Indent(indentWidth: f32): void;
     /**
-     * @address 0x56811DFC
+     * @address 0x56801E2E
      */
     function Unindent(indentWidth: f32): void;
     /**
-     * @address 0x5681755E
+     * @address 0x56807699
      */
     function BeginGroup(): void;
     /**
-     * @address 0x5681852B
+     * @address 0x5680867A
      */
     function EndGroup(): void;
     /**
-     * @address 0x56815C1D
+     * @address 0x56805D2B
      */
     function AlignTextToFramePadding(): void;
     /**
-     * @address 0x56818125
+     * @address 0x5680826F
      */
     function GetTextLineHeight(): f32;
     /**
-     * @address 0x56811A3C
+     * @address 0x56801A64
      */
     function GetTextLineHeightWithSpacing(): f32;
     /**
-     * @address 0x56819471
+     * @address 0x568095E8
      */
     function GetFrameHeight(): f32;
     /**
-     * @address 0x56818387
+     * @address 0x568084D1
      */
     function GetFrameHeightWithSpacing(): f32;
     /**
-     * @address 0x56819250
+     * @address 0x568093B8
      */
     function PushID(id: i32): void;
     /**
-     * @address 0x5681592F
+     * @address 0x56805A33
      */
     function PopID(): void;
     /**
-     * @address 0x56813968
+     * @address 0x56803A08
      */
     function GetID(id: string): u32;
     /**
-     * @address 0x56A1C970
+     * @address 0x56A10BF0
      */
     function Text(text: string): void;
     /**
-     * @address 0x56A1C9D0
+     * @address 0x56A10C50
      */
     function TextColored(color: ImVec4, text: string): void;
     /**
-     * @address 0x56A1CA30
+     * @address 0x56A10CB0
      */
     function TextDisabled(text: string): void;
     /**
-     * @address 0x56A1CA90
+     * @address 0x56A10D10
      */
     function TextWrapped(text: string): void;
     /**
-     * @address 0x56A1CAF0
+     * @address 0x56A10D70
      */
     function LabelText(label: string, text: string): void;
     /**
-     * @address 0x56A1CB50
+     * @address 0x56A10DD0
      */
     function BulletText(text: string): void;
     /**
-     * @address 0x56811A50
+     * @address 0x56801A78
      */
     function SeparatorText(label: string): void;
     /**
-     * @address 0x5681877E
+     * @address 0x568088D2
      */
     function Button(label: string, size: ImVec2): boolean;
     /**
-     * @address 0x5681878D
+     * @address 0x568088E1
      */
     function SmallButton(label: string): boolean;
     /**
-     * @address 0x56A1CBC0
+     * @address 0x56A10E40
      */
     function InvisibleButton(id: string, size: ImVec2, flags: ButtonFlags): boolean;
     /**
-     * @address 0x56A1CC20
+     * @address 0x56A10EA0
      */
     function ArrowButton(id: string, direction: Direction): boolean;
     /**
-     * @address 0x56A1CC80
+     * @address 0x56A10F00
      */
     function Checkbox(label: string, value: boolean): boolean;
     /**
-     * @address 0x56813B1B
+     * @address 0x56803BC0
      */
     function RadioButton(label: string, active: boolean): boolean;
     /**
-     * @address 0x56A1CD20
+     * @address 0x56A10FA0
      */
     function ProgressBar(fraction: f32): void;
     /**
-     * @address 0x56813DDC
+     * @address 0x56803E90
      */
     function Bullet(): void;
     /**
-     * @address 0x56A1CE60
+     * @address 0x56A110E0
      */
     function Image(textureId: u32, size: ImVec2): void;
     /**
-     * @address 0x56A1CFA0
+     * @address 0x56A11220
      */
     function ImageButton(textureId: u32, size: ImVec2): boolean;
     /**
-     * @address 0x56A1D080
+     * @address 0x56A11300
      */
     function DragFloat(label: string, value: f32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A1D170
+     * @address 0x56A113F0
      */
     function DragFloat2(label: string, value: basic_vec2f, onChange: (param_0: basic_vec2f) => void): boolean;
     /**
-     * @address 0x56A1D250
+     * @address 0x56A114D0
      */
     function DragFloat3(label: string, value: basic_vec3f, onChange: (param_0: basic_vec3f) => void): boolean;
     /**
-     * @address 0x56A1D330
+     * @address 0x56A115B0
      */
     function DragFloat4(label: string, value: basic_vec4f, onChange: (param_0: basic_vec4f) => void): boolean;
     /**
-     * @address 0x56A1D400
+     * @address 0x56A11680
      */
     function DragInt(label: string, value: i32, onChange: (param_0: i32) => void): boolean;
     /**
-     * @address 0x56A1D4D0
+     * @address 0x56A11750
      */
     function DragInt2(label: string, value: basic_vec2i, onChange: (param_0: basic_vec2i) => void): boolean;
     /**
-     * @address 0x56A1D5A0
+     * @address 0x56A11820
      */
     function DragInt3(label: string, value: basic_vec3i, onChange: (param_0: basic_vec3i) => void): boolean;
     /**
-     * @address 0x56A1D670
+     * @address 0x56A118F0
      */
     function DragInt4(label: string, value: basic_vec4i, onChange: (param_0: basic_vec4i) => void): boolean;
     /**
-     * @address 0x56A1D740
+     * @address 0x56A119C0
      */
     function SliderFloat(label: string, value: f32, min: f32, max: f32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A1D830
+     * @address 0x56A11AB0
      */
     function SliderFloat2(label: string, value: basic_vec2f, min: f32, max: f32, onChange: (param_0: basic_vec2f) => void): boolean;
     /**
-     * @address 0x56A1D920
+     * @address 0x56A11BA0
      */
     function SliderFloat3(label: string, value: basic_vec3f, min: f32, max: f32, onChange: (param_0: basic_vec3f) => void): boolean;
     /**
-     * @address 0x56A1DA10
+     * @address 0x56A11C90
      */
     function SliderFloat4(label: string, value: basic_vec4f, min: f32, max: f32, onChange: (param_0: basic_vec4f) => void): boolean;
     /**
-     * @address 0x56A1DB00
+     * @address 0x56A11D80
      */
     function SliderAngle(label: string, value: f32, min: f32, max: f32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A1DBF0
+     * @address 0x56A11E70
      */
     function SliderInt(label: string, value: i32, min: i32, max: i32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A1DCC0
+     * @address 0x56A11F40
      */
     function SliderInt2(label: string, value: basic_vec2i, min: i32, max: i32, onChange: (param_0: basic_vec2i) => void): boolean;
     /**
-     * @address 0x56A1DD90
+     * @address 0x56A12010
      */
     function SliderInt3(label: string, value: basic_vec3i, min: i32, max: i32, onChange: (param_0: basic_vec3i) => void): boolean;
     /**
-     * @address 0x56A1DE60
+     * @address 0x56A120E0
      */
     function SliderInt4(label: string, value: basic_vec4i, min: i32, max: i32, onChange: (param_0: basic_vec4i) => void): boolean;
     /**
-     * @address 0x56A1DF50
+     * @address 0x56A121D0
      */
     function VSliderFloat(label: string, size: ImVec2, value: f32, min: f32, max: f32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A1E030
+     * @address 0x56A122B0
      */
     function VSliderInt(label: string, size: ImVec2, value: i32, min: i32, max: i32, onChange: (param_0: i32) => void): boolean;
     /**
-     * @address 0x56A1E1A0
+     * @address 0x56A12420
      */
     function InputText(label: string, value: string, onChange: (param_0: string) => void): boolean;
     /**
-     * @address 0x56A1E300
+     * @address 0x56A12580
      */
     function InputTextMultiline(label: string, value: string, size: ImVec2, onChange: (param_0: string) => void): boolean;
     /**
-     * @address 0x56A1E470
+     * @address 0x56A126F0
      */
     function InputTextWithHint(label: string, value: string, onChange: string, param_4: (param_0: string) => void): boolean;
     /**
-     * @address 0x56A1E550
+     * @address 0x56A127D0
      */
     function InputFloat(label: string, value: f32, onChange: (param_0: f32) => void): boolean;
     /**
-     * @address 0x56A1E620
+     * @address 0x56A128A0
      */
     function InputFloat2(label: string, value: basic_vec2f, onChange: (param_0: basic_vec2f) => void): boolean;
     /**
-     * @address 0x56A1E6E0
+     * @address 0x56A12960
      */
     function InputFloat3(label: string, value: basic_vec3f, onChange: (param_0: basic_vec3f) => void): boolean;
     /**
-     * @address 0x56A1E7A0
+     * @address 0x56A12A20
      */
     function InputFloat4(label: string, value: basic_vec4f, onChange: (param_0: basic_vec4f) => void): boolean;
     /**
-     * @address 0x56A1E860
+     * @address 0x56A12AE0
      */
     function InputInt(label: string, value: i32, onChange: (param_0: i32) => void): boolean;
     /**
-     * @address 0x56A1E910
+     * @address 0x56A12B90
      */
     function InputInt2(label: string, value: basic_vec2i, onChange: (param_0: basic_vec2i) => void): boolean;
     /**
-     * @address 0x56A1E9C0
+     * @address 0x56A12C40
      */
     function InputInt3(label: string, value: basic_vec3i, onChange: (param_0: basic_vec3i) => void): boolean;
     /**
-     * @address 0x56A1EA70
+     * @address 0x56A12CF0
      */
     function InputInt4(label: string, value: basic_vec4i, onChange: (param_0: basic_vec4i) => void): boolean;
     /**
-     * @address 0x56A1EB20
+     * @address 0x56A12DA0
      */
     function ColorEdit3(label: string, value: basic_vec3f, onChange: (param_0: basic_vec3f) => void): boolean;
     /**
-     * @address 0x56A1EBD0
+     * @address 0x56A12E50
      */
     function ColorEdit4(label: string, value: basic_vec4f, onChange: (param_0: basic_vec4f) => void): boolean;
     /**
-     * @address 0x56A1EC80
+     * @address 0x56A12F00
      */
     function ColorPicker3(label: string, value: basic_vec3f, onChange: (param_0: basic_vec3f) => void): boolean;
     /**
-     * @address 0x56A1ED30
+     * @address 0x56A12FB0
      */
     function ColorPicker4(label: string, value: basic_vec4f, onChange: (param_0: basic_vec4f) => void): boolean;
     /**
-     * @address 0x56A1ED90
+     * @address 0x56A13010
      */
     function SetColorEditOptions(flags: ColorEditFlags): void;
     /**
-     * @address 0x56817A31
+     * @address 0x56807B76
      */
     function TreeNode(label: string): boolean;
     /**
-     * @address 0x56A1EDF0
+     * @address 0x56A13070
      */
     function TreeNodeEx(label: string, flags: TreeNodeFlags): boolean;
     /**
-     * @address 0x56A1EE50
+     * @address 0x56A130D0
      */
     function TreePush(id: string): void;
     /**
-     * @address 0x568183BE
+     * @address 0x56808508
      */
     function TreePop(): void;
     /**
-     * @address 0x56812342
+     * @address 0x56802388
      */
     function GetTreeNodeToLabelSpacing(): f32;
     /**
-     * @address 0x56A1EEB0
+     * @address 0x56A13130
      */
     function CollapsingHeader(label: string, flags: TreeNodeFlags): boolean;
     /**
-     * @address 0x56A1EF10
+     * @address 0x56A13190
      */
     function SetNextItemOpen(isOpen: boolean): void;
     /**
-     * @address 0x56A1EFA0
+     * @address 0x56A13220
      */
     function Selectable(label: string, isSelected: boolean): boolean;
     /**
-     * @address 0x568122D4
+     * @address 0x5680231A
      */
     function BeginMenuBar(): boolean;
     /**
-     * @address 0x568173C4
+     * @address 0x568074FA
      */
     function EndMenuBar(): void;
     /**
-     * @address 0x56813AA3
+     * @address 0x56803B48
      */
     function BeginMainMenuBar(): boolean;
     /**
-     * @address 0x56816C7B
+     * @address 0x56806DAC
      */
     function EndMainMenuBar(): void;
     /**
-     * @address 0x5681313E
+     * @address 0x568031C5
      */
     function BeginMenu(label: string, isEnabled: boolean): boolean;
     /**
-     * @address 0x56815D62
+     * @address 0x56805E7A
      */
     function EndMenu(): void;
     /**
-     * @address 0x56A1F010
+     * @address 0x56A13290
      */
     function MenuItem(label: string, shortcut: string | null, isSelected: boolean, isEnabled: boolean): boolean;
     /**
-     * @address 0x56811145
+     * @address 0x5680114F
      */
     function BeginTooltip(): boolean;
     /**
-     * @address 0x56817801
+     * @address 0x56807946
      */
     function EndTooltip(): void;
     /**
-     * @address 0x56A1F080
+     * @address 0x56A13300
      */
     function SetTooltip(tooltip: string): void;
     /**
-     * @address 0x56812982
+     * @address 0x568029D2
      */
     function BeginItemTooltip(): boolean;
     /**
-     * @address 0x56A1F0E0
+     * @address 0x56A13360
      */
     function SetItemTooltip(tooltip: string): void;
     /**
-     * @address 0x56A1F140
+     * @address 0x56A133C0
      */
     function BeginPopup(id: string, flags: WindowFlags): boolean;
     /**
-     * @address 0x56A1F1B0
+     * @address 0x56A13430
      */
     function BeginPopupModal(id: string, isOpen: boolean, flags: WindowFlags): boolean;
     /**
-     * @address 0x568138FF
+     * @address 0x5680399F
      */
     function EndPopup(): void;
     /**
-     * @address 0x56A1F210
+     * @address 0x56A13490
      */
     function OpenPopup(popupId: string): void;
     /**
-     * @address 0x56814CEB
+     * @address 0x56804DD6
      */
     function BeginDisabled(isDisabled: boolean): void;
     /**
-     * @address 0x56812D79
+     * @address 0x56802DEC
      */
     function EndDisabled(): void;
     /**
-     * @address 0x56816FF5
+     * @address 0x56807126
      */
     function PushClipRect(min: ImVec2, max: ImVec2, doIntersectWithCurrent: boolean): void;
     /**
-     * @address 0x5681174E
+     * @address 0x56801767
      */
     function PopClipRect(): void;
     /**
-     * @address 0x568115FF
+     * @address 0x56801618
      */
     function IsItemActive(): boolean;
     /**
-     * @address 0x56815BF0
+     * @address 0x56805CF9
      */
     function IsItemFocused(): boolean;
     /**
-     * @address 0x56817194
+     * @address 0x568072C5
      */
     function IsItemVisible(): boolean;
     /**
-     * @address 0x5681738D
+     * @address 0x568074C3
      */
     function IsItemEdited(): boolean;
     /**
-     * @address 0x568169BF
+     * @address 0x56806AE6
      */
     function IsItemActivated(): boolean;
     /**
-     * @address 0x568115FA
+     * @address 0x56801613
      */
     function IsItemDeactivated(): boolean;
     /**
-     * @address 0x56812121
+     * @address 0x56802167
      */
     function IsItemDeactivatedAfterEdit(): boolean;
     /**
-     * @address 0x5681554C
+     * @address 0x56805646
      */
     function IsItemToggledOpen(): boolean;
     /**
-     * @address 0x56812DDD
+     * @address 0x56802E55
      */
     function IsAnyItemHovered(): boolean;
     /**
-     * @address 0x56815EA2
+     * @address 0x56805FC4
      */
     function IsAnyItemActive(): boolean;
     /**
-     * @address 0x56818076
+     * @address 0x568081BB
      */
     function IsAnyItemFocused(): boolean;
     /**
-     * @address 0x568193F9
+     * @address 0x56809570
      */
     function GetItemID(): u32;
     /**
-     * @address 0x5681471E
+     * @address 0x568047FA
      */
     function GetItemRectMin(): ImVec2;
     /**
-     * @address 0x568158C6
+     * @address 0x568059CA
      */
     function GetItemRectMax(): ImVec2;
     /**
-     * @address 0x56814D9F
+     * @address 0x56804E8A
      */
     function GetItemRectSize(): ImVec2;
     /**
-     * @address 0x56817F36
+     * @address 0x56808080
      */
     function GetMainViewport(): ImGuiViewport | null;
     /**
-     * @address 0x568160C8
+     * @address 0x568061EA
      */
     function IsKeyDown(param_1: Key): boolean;
     /**
-     * @address 0x568114B0
+     * @address 0x568014C9
      */
     function IsKeyPressed(param_1: Key, param_2: boolean): boolean;
     /**
-     * @address 0x56815B37
+     * @address 0x56805C3B
      */
     function IsKeyReleased(param_1: Key): boolean;
     /**
-     * @address 0x5681790F
+     * @address 0x56807A54
      */
     function IsKeyChordPressed(param_1: i32): boolean;
     /**
-     * @address 0x568175E5
+     * @address 0x56807720
      */
     function GetKeyPressedAmount(param_1: Key, param_2: f32, param_3: f32): i32;
     /**
-     * @address 0x56814BD8
+     * @address 0x56804CC3
      */
     function GetKeyName(param_1: Key): string | null;
     /**
-     * @address 0x56812A5E
+     * @address 0x56802AAE
      */
     function IsMouseHoveringRect(min: ImVec2, max: ImVec2, clip: boolean): boolean;
     /**
-     * @address 0x56818CA6
+     * @address 0x56808DFF
      */
     function IsAnyMouseDown(): boolean;
     /**
-     * @address 0x56816901
+     * @address 0x56806A23
      */
     function GetMousePos(): ImVec2;
     /**
-     * @address 0x568155DD
+     * @address 0x568056D7
      */
     function GetClipboardText(): string | null;
     /**
-     * @address 0x56818873
+     * @address 0x568089CC
      */
     function SetClipboardText(param_1: string): void;
     /**
-     * @address 0x56A1F3B0
+     * @address 0x56A13630
      */
     function BeginGlobalDockSpace(withMenu: boolean): void;
     /**
-     * @address 0x56814458
+     * @address 0x5680452A
      */
     function EndGlobalDockSpace(): void;
 }
 declare namespace sys {
     /**
-     * @address 0x56A639B0
+     * @address 0x56A57320
      */
     function loadDLL(param_1: string): boolean;
 }

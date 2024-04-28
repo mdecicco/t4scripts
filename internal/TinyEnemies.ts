@@ -1,4 +1,4 @@
-import { ModMan } from '../internal/mod_mgr';
+import { GlobalMod, ModMan } from '../internal/mod_mgr';
 
 type Listener = {
     level: t4.CLevel;

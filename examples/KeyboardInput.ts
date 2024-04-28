@@ -1,4 +1,4 @@
-import { ModMan } from '../internal/mod_mgr';
+import { ActorController, ActorMod, ModMan } from '../internal/mod_mgr';
 
 //
 // Simple mod to make actors of types 'HumanAI', 'AnimalAI',
